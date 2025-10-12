@@ -1,3 +1,6 @@
+要使页脚背景色改为`#8b4513`，需修正原代码中**页脚样式的变量引用错误**（原代码使用了未定义的`var(#8b4513)`和`var(--light-text)`），直接指定具体颜色值即可。以下是完整的修改后代码：
+
+```html
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -55,7 +58,7 @@
       width: 100%; /* 确保容器宽度100% */
       margin: 0; /* 移除默认margin */
       /* 图片横向覆盖整个页面 */
-      background-image: url("images/s65fbd799ca20e.jpg"); /* 示例非遗相关图片 */
+      background-image: url("s65fbd799ca20e.jpg"); /* 示例非遗相关图片 */
       background-size: cover; /* 覆盖整个容器 */
       background-position: center; /* 图片居中显示 */
       background-repeat: no-repeat;
@@ -101,6 +104,89 @@
       margin-bottom: 2.5rem;
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
       line-height: 1.8;
+    }
+
+    /* 页脚样式 - 已修改背景色为#8b4513 */
+    footer {
+      background-color: #8b4513; /* 直接指定背景色，删除原错误变量 */
+      color: #fff; /* 文字改为白色，提升可读性（原--light-text未定义） */
+      padding: 60px 0 20px;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+      padding: 0 2rem; /* 增加左右内边距，避免内容贴边 */
+    }
+    
+    .footer-column h3 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+      color: #ffcc99; /* 标题文字改为浅橙色，增加层次感 */
+    }
+    
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 2px;
+      background-color: #ffcc99; /* 下划线颜色与标题匹配 */
+      bottom: 0;
+      left: 0;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: #eee; /* 链接文字改为浅灰色，hover时更明显 */
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: #ffcc99; /* hover时链接变为浅橙色 */
+    }
+    
+    .social-links {
+      display: flex;
+      margin-top: 20px;
+    }
+    
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      margin-right: 10px;
+      color: #fff; /* 图标颜色改为白色 */
+      transition: all 0.3s;
+    }
+    
+    .social-links a:hover {
+      background-color: #ffcc99; /* hover时背景变为浅橙色 */
+      color: #8b4513; /* hover时图标变为棕色，对比更明显 */
+      transform: translateY(-3px);
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      color: #ddd; /* 版权文字改为浅灰色 */
     }
 
     .btn {
@@ -153,37 +239,53 @@
       transform: translateY(-5px);
     }
 
-/* 剪纸视频卡片的封面背景图 */
-.video-card:nth-child(1) .video-thumbnail {
-  background-image: url("images/VCG211427348587.jpg"); /* 替换为实际图片路径/在线链接 */
-  background-size: cover;   /* 背景图自适应覆盖容器 */
-  background-position: center; /* 背景图居中显示 */
-  color: transparent; /* 隐藏原本的文字“皮影 · 光影传奇”，避免遮挡图片 */
-}
+    /* 剪纸视频卡片的封面背景图 */
+    .video-card:nth-child(1) .video-thumbnail {
+      background-image: url("VCG211427348587.jpg"); /* 替换为实际图片路径/在线链接 */
+      background-size: cover;   /* 背景图自适应覆盖容器 */
+      background-position: center; /* 背景图居中显示 */
+      color: transparent; /* 隐藏原本的文字，避免遮挡图片 */
+    }
 
-/* 陶艺视频卡片的封面背景图 */
-.video-card:nth-child(2) .video-thumbnail {
-  background-image: url("images/VCG211356955925.jpg"); /* 替换为实际图片路径/在线链接 */
-  background-size: cover;   /* 背景图自适应覆盖容器 */
-  background-position: center; /* 背景图居中显示 */
-  color: transparent; /* 隐藏原本的文字“皮影 · 光影传奇”，避免遮挡图片 */
-}
+    /* 陶艺视频卡片的封面背景图 */
+    .video-card:nth-child(2) .video-thumbnail {
+      background-image: url("VCG211356955925.jpg"); /* 替换为实际图片路径/在线链接 */
+      background-size: cover;   /* 背景图自适应覆盖容器 */
+      background-position: center; /* 背景图居中显示 */
+      color: transparent; /* 隐藏原本的文字，避免遮挡图片 */
+    }
 
-/* 苏绣视频卡片的封面背景图 */
-.video-card:nth-child(3) .video-thumbnail {
-  background-image: url("images/VCG211433422786.jpg"); /* 替换为实际图片路径/在线链接 */
-  background-size: cover;   /* 背景图自适应覆盖容器 */
-  background-position: center; /* 背景图居中显示 */
-  color: transparent; /* 隐藏原本的文字“皮影 · 光影传奇”，避免遮挡图片 */
-}
+    /* 苏绣视频卡片的封面背景图 */
+    .video-card:nth-child(3) .video-thumbnail {
+      background-image: url("VCG211433422786.jpg"); /* 替换为实际图片路径/在线链接 */
+      background-size: cover;   /* 背景图自适应覆盖容器 */
+      background-position: center; /* 背景图居中显示 */
+      color: transparent; /* 隐藏原本的文字，避免遮挡图片 */
+    }
 
-/* 皮影戏视频卡片的封面背景图 */
-.video-card:nth-child(4) .video-thumbnail {
-  background-image: url("images/VCG211398452703.jpg"); /* 替换为实际图片路径/在线链接 */
-  background-size: cover;   /* 背景图自适应覆盖容器 */
-  background-position: center; /* 背景图居中显示 */
-  color: transparent; /* 隐藏原本的文字“皮影 · 光影传奇”，避免遮挡图片 */
-}
+    /* 皮影戏视频卡片的封面背景图 */
+    .video-card:nth-child(4) .video-thumbnail {
+      background-image: url("VCG211398452703.jpg"); /* 替换为实际图片路径/在线链接 */
+      background-size: cover;   /* 背景图自适应覆盖容器 */
+      background-position: center; /* 背景图居中显示 */
+      color: transparent; /* 隐藏原本的文字，避免遮挡图片 */
+    }
+
+    /* 唐卡视频卡片的封面背景图 */
+    .video-card:nth-child(5) .video-thumbnail {
+      background-image: url("VCG211363135491.jpg"); /* 替换为实际图片路径/在线链接 */
+      background-size: cover;   /* 背景图自适应覆盖容器 */
+      background-position: center; /* 背景图居中显示 */
+      color: transparent; /* 隐藏原本的文字，避免遮挡图片 */
+    }
+
+    /* 竹编视频卡片的封面背景图 */
+    .video-card:nth-child(6) .video-thumbnail {
+      background-image: url("VCG211417567052.jpg"); /* 替换为实际图片路径/在线链接 */
+      background-size: cover;   /* 背景图自适应覆盖容器 */
+      background-position: center; /* 背景图居中显示 */
+      color: transparent; /* 隐藏原本的文字，避免遮挡图片 */
+    }
 
     .video-thumbnail {
       width: 100%;
@@ -209,15 +311,6 @@
     .video-desc {
       color: #666;
       font-size: 0.9rem;
-    }
-
-    /* 页脚 */
-    .footer {
-      background-color: #8b4513;
-      color: white;
-      text-align: center;
-      padding: 1.5rem;
-      margin-top: 2rem;
     }
   </style>
 </head>
@@ -281,13 +374,66 @@
           <p class="video-desc">探索皮影从“牛皮雕刻”到“光影表演”的全流程，感受这门古老民间艺术的独特叙事力。</p>
         </div>
       </div>
+
+      <!-- 视频卡片5：唐卡 -->
+      <div class="video-card">
+        <div class="video-thumbnail">唐卡 · 色彩信仰</div>
+        <div class="video-info">
+          <h3 class="video-title">唐卡：色彩里的信仰</h3>
+          <p class="video-desc">观摩画师研磨矿物颜料、勾勒金线，看一幅唐卡如何在虔诚中绘就，承载藏传佛教的庄严与神秘。</p>
+        </div>
+      </div>
+
+      <!-- 视频卡片6：竹编 -->
+      <div class="video-card">
+        <div class="video-thumbnail">竹编 · 竹丝韵律</div>
+        <div class="video-info">
+          <h3 class="video-title">竹编：竹丝的韵律</h3>
+          <p class="video-desc">学习编一只竹篮，看竹篾在指尖穿梭交错，体会“经纬成器”的传统智慧与自然之美。</p>
+        </div>
+      </div>
+
     </div>
   </section>
 
   <!-- 页脚 -->
-  <footer class="footer">
-    <p>© 2025 非遗文化短视频平台 | 传承传统技艺，记录文化之美</p>
-  </footer>
+ <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>非遗基因解码者</h3>
+                    <p>基于大模型的非遗文化传承与创新平台，致力于非物质文化遗产的保护、传播与创新。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="heritage.html">非遗展示</a></li>
+                        <li><a href="intelligent-qa.html">智能问答</a></li>
+                        <li><a href="videos.html">短视频</a></li>
+                        <li><a href="ai-creation.html">AI创作</a></li>
+                        <li><a href="booking.html">预约体验</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 南京市栖霞区仙林街道文苑路9号</li>
+                        <li><i class="fas fa-phone"></i>18851189718</li>
+                        <li><i class="fas fa-envelope"></i> 2907713740@qq.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 非遗基因解码者 - 基于大模型的个性定制平台 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
-
