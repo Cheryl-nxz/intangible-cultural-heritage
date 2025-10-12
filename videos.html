@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>非遗文化 · 短视频展示</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     /* 全局样式重置 & 基础设置 */
     * {
@@ -13,11 +14,27 @@
       font-family: "Microsoft Yahei", sans-serif;
     }
 
+    :root {
+            --primary-color: #8B4513;
+            --secondary-color: #D2691E;
+            --accent-color: #F4A460;
+            --light-color: #FAEBD7;
+            --dark-color: #5D4037;
+            --text-color: #333;
+            --light-text: #fff;
+        }
+
     body {
       background-color: #f9f5f0;
       color: #333;
       line-height: 1.6;
     }
+    
+    .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
     /* 导航栏 */
     .navbar {
@@ -102,90 +119,87 @@
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
       line-height: 1.8;
     }
-
-    /* 页脚样式 - 已修改背景色为#8b4513 */
+    
+    /* 页脚样式 - 与index.html保持一致 */
     footer {
-      background-color: #8b4513; /* 直接指定背景色，删除原错误变量 */
-      color: #fff; /* 文字改为白色，提升可读性（原--light-text未定义） */
-      padding: 60px 0 20px;
+        background-color: var(--dark-color);
+        color: var(--light-text);
+        padding: 60px 0 20px;
     }
     
     .footer-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 40px;
-      margin-bottom: 40px;
-      padding: 0 2rem; /* 增加左右内边距，避免内容贴边 */
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
     }
     
     .footer-column h3 {
-      font-size: 1.3rem;
-      margin-bottom: 20px;
-      position: relative;
-      padding-bottom: 10px;
-      color: #ffcc99; /* 标题文字改为浅橙色，增加层次感 */
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
     }
     
     .footer-column h3::after {
-      content: '';
-      position: absolute;
-      width: 40px;
-      height: 2px;
-      background-color: #ffcc99; /* 下划线颜色与标题匹配 */
-      bottom: 0;
-      left: 0;
+        content: '';
+        position: absolute;
+        width: 40px;
+        height: 2px;
+        background-color: var(--accent-color);
+        bottom: 0;
+        left: 0;
     }
     
     .footer-links {
-      list-style: none;
+        list-style: none;
     }
     
     .footer-links li {
-      margin-bottom: 10px;
+        margin-bottom: 10px;
     }
     
     .footer-links a {
-      color: #eee; /* 链接文字改为浅灰色，hover时更明显 */
-      text-decoration: none;
-      transition: color 0.3s;
+        color: #ddd;
+        text-decoration: none;
+        transition: color 0.3s;
     }
     
     .footer-links a:hover {
-      color: #ffcc99; /* hover时链接变为浅橙色 */
+        color: var(--accent-color);
     }
     
     .social-links {
-      display: flex;
-      margin-top: 20px;
+        display: flex;
+        margin-top: 20px;
     }
     
     .social-links a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      margin-right: 10px;
-      color: #fff; /* 图标颜色改为白色 */
-      transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        margin-right: 10px;
+        color: var(--light-text);
+        transition: all 0.3s;
     }
     
     .social-links a:hover {
-      background-color: #ffcc99; /* hover时背景变为浅橙色 */
-      color: #8b4513; /* hover时图标变为棕色，对比更明显 */
-      transform: translateY(-3px);
+        background-color: var(--accent-color);
+        transform: translateY(-3px);
     }
     
     .copyright {
-      text-align: center;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      font-size: 0.9rem;
-      color: #ddd; /* 版权文字改为浅灰色 */
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.9rem;
+        color: #aaa;
     }
-
+        
     .btn {
       display: inline-block;
       background-color: #f4a460;
@@ -341,7 +355,7 @@
         <div class="video-thumbnail">剪纸 · 百鸟朝凤</div>
         <div class="video-info">
           <h3 class="video-title">剪纸艺术：纸上的生命</h3>
-          <p class="video-desc">跟随非遗传承人，学习“百鸟朝凤”剪纸的精细技法，看纸张如何在剪刀下绽放艺术生命力。</p>
+          <p class="video-desc">跟随非遗传承人，学习"百鸟朝凤"剪纸的精细技法，看纸张如何在剪刀下绽放艺术生命力。</p>
         </div>
       </div>
 
@@ -350,7 +364,7 @@
         <div class="video-thumbnail">陶艺 · 拉坯工艺</div>
         <div class="video-info">
           <h3 class="video-title">陶艺拉坯：泥土的蜕变</h3>
-          <p class="video-desc">陶艺大师演示拉坯、修坯、上釉全过程，揭秘“泥土成器”的千年技艺，感受手工造物的温度。</p>
+          <p class="video-desc">陶艺大师演示拉坯、修坯、上釉全过程，揭秘"泥土成器"的千年技艺，感受手工造物的温度。</p>
         </div>
       </div>
 
@@ -359,7 +373,7 @@
         <div class="video-thumbnail">苏绣 · 针下生花</div>
         <div class="video-info">
           <h3 class="video-title">苏绣：丝线里的江南</h3>
-          <p class="video-desc">苏绣传承人展示“双面绣”绝技，一根丝线劈成十六份，看针线如何在绸缎上绣出灵动花鸟。</p>
+          <p class="video-desc">苏绣传承人展示"双面绣"绝技，一根丝线劈成十六份，看针线如何在绸缎上绣出灵动花鸟。</p>
         </div>
       </div>
 
@@ -368,7 +382,7 @@
         <div class="video-thumbnail">皮影 · 光影传奇</div>
         <div class="video-info">
           <h3 class="video-title">皮影戏：幕后的故事</h3>
-          <p class="video-desc">探索皮影从“牛皮雕刻”到“光影表演”的全流程，感受这门古老民间艺术的独特叙事力。</p>
+          <p class="video-desc">探索皮影从"牛皮雕刻"到"光影表演"的全流程，感受这门古老民间艺术的独特叙事力。</p>
         </div>
       </div>
 
@@ -386,53 +400,51 @@
         <div class="video-thumbnail">竹编 · 竹丝韵律</div>
         <div class="video-info">
           <h3 class="video-title">竹编：竹丝的韵律</h3>
-          <p class="video-desc">学习编一只竹篮，看竹篾在指尖穿梭交错，体会“经纬成器”的传统智慧与自然之美。</p>
+          <p class="video-desc">学习编一只竹篮，看竹篾在指尖穿梭交错，体会"经纬成器"的传统智慧与自然之美。</p>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- 页脚 -->
- <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>非遗基因解码者</h3>
-                    <p>基于大模型的非遗文化传承与创新平台，致力于非物质文化遗产的保护、传播与创新。</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-weixin"></i></a>
-                        <a href="#"><i class="fab fa-weibo"></i></a>
-                        <a href="#"><i class="fab fa-qq"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>快速链接</h3>
-                    <ul class="footer-links">
-                        <li><a href="index.html">首页</a></li>
-                        <li><a href="heritage.html">非遗展示</a></li>
-                        <li><a href="intelligent-qa.html">智能问答</a></li>
-                        <li><a href="videos.html">短视频</a></li>
-                        <li><a href="ai-creation.html">AI创作</a></li>
-                        <li><a href="booking.html">预约体验</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>联系我们</h3>
-                    <ul class="footer-links">
-                        <li><i class="fas fa-map-marker-alt"></i> 南京市栖霞区仙林街道文苑路9号</li>
-                        <li><i class="fas fa-phone"></i>18851189718</li>
-                        <li><i class="fas fa-envelope"></i> 2907713740@qq.com</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 非遗基因解码者 - 基于大模型的个性定制平台 | 版权所有</p>
-            </div>
+  <!-- 页脚 - 已修改为与index.html一致 -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>非遗基因解码者</h3>
+          <p>基于大模型的非遗文化传承与创新平台，致力于非物质文化遗产的保护、传播与创新。</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-weixin"></i></a>
+            <a href="#"><i class="fab fa-weibo"></i></a>
+            <a href="#"><i class="fab fa-qq"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+          </div>
         </div>
-    </footer>
+        <div class="footer-column">
+          <h3>快速链接</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="heritage.html">非遗展示</a></li>
+            <li><a href="intelligent-qa.html">智能问答</a></li>
+            <li><a href="videos.html">短视频</a></li>
+            <li><a href="ai-creation.html">AI创作</a></li>
+            <li><a href="booking.html">预约体验</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>联系我们</h3>
+          <ul class="footer-links">
+            <li><i class="fas fa-map-marker-alt"></i> 南京市栖霞区仙林街道文苑路9号</li>
+            <li><i class="fas fa-phone"></i> 18851189718</li>
+            <li><i class="fas fa-envelope"></i> 2907713740@qq.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 非遗基因解码者 - 基于大模型的个性定制平台 | 版权所有</p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
-
-
