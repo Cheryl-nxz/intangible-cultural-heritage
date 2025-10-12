@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>非遗文化 · 短视频展示</title>
+  <style>
+    /* 全局样式重置 & 基础设置 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft Yahei", sans-serif;
+    }
+
+    body {
+      background-color: #f9f5f0;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* 导航栏 */
+    .navbar {
+      background-color: #8b4513;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 10; /* 确保导航栏在背景图上方 */
+    }
+
+    .navbar-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .navbar-nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-nav a:hover {
+      color: #ffcc99;
+    }
+
+    /* 核心展示区（Hero Section）- 图片横向覆盖整个页面 */
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 15rem; /* 增加上下内边距，给内容留出空间 */
+      width: 100%; /* 确保容器宽度100% */
+      margin: 0; /* 移除默认margin */
+      /* 图片横向覆盖整个页面 */
+      background-image: url("s65fbd799ca20e.jpg"); /* 示例非遗相关图片 */
+      background-size: cover; /* 覆盖整个容器 */
+      background-position: center; /* 图片居中显示 */
+      background-repeat: no-repeat;
+      position: relative;
+    }
+
+    /* 增加半透明遮罩，提升文字可读性 */
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4); /* 黑色半透明遮罩 */
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2; /* 确保文字在遮罩上方 */
+      max-width: 800px;
+      margin: 0 auto; /* 文字内容居中 */
+      color: white;
+    }
+
+    .hero-icon {
+      width: 60px;
+      height: 60px;
+      background-color: rgba(255, 255, 255, 0.8);
+      clip-path: polygon(0 0, 70% 0, 100% 50%, 70% 100%, 0 100%, 0 50%, 30% 50%);
+      margin: 0 auto 1.5rem;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-desc {
+      font-size: 1.2rem;
+      margin-bottom: 2.5rem;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      line-height: 1.8;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #f4a460;
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:hover {
+      background-color: #cd853f;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* 视频列表区域 */
+    .video-section {
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      color: #8b4513;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .video-card {
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-5px);
+    }
+
+/* 剪纸视频卡片的封面背景图 */
+.video-card:nth-child(1) .video-thumbnail {
+  background-image: url("VCG211427348587.jpg"); /* 替换为实际图片路径/在线链接 */
+  background-size: cover;   /* 背景图自适应覆盖容器 */
+  background-position: center; /* 背景图居中显示 */
+  color: transparent; /* 隐藏原本的文字“皮影 · 光影传奇”，避免遮挡图片 */
+}
+
+/* 陶艺视频卡片的封面背景图 */
+.video-card:nth-child(2) .video-thumbnail {
+  background-image: url("VCG211356955925.jpg"); /* 替换为实际图片路径/在线链接 */
+  background-size: cover;   /* 背景图自适应覆盖容器 */
+  background-position: center; /* 背景图居中显示 */
+  color: transparent; /* 隐藏原本的文字“皮影 · 光影传奇”，避免遮挡图片 */
+}
+
+/* 苏绣视频卡片的封面背景图 */
+.video-card:nth-child(3) .video-thumbnail {
+  background-image: url("VCG211433422786.jpg"); /* 替换为实际图片路径/在线链接 */
+  background-size: cover;   /* 背景图自适应覆盖容器 */
+  background-position: center; /* 背景图居中显示 */
+  color: transparent; /* 隐藏原本的文字“皮影 · 光影传奇”，避免遮挡图片 */
+}
+
+/* 皮影戏视频卡片的封面背景图 */
+.video-card:nth-child(4) .video-thumbnail {
+  background-image: url("VCG211398452703.jpg"); /* 替换为实际图片路径/在线链接 */
+  background-size: cover;   /* 背景图自适应覆盖容器 */
+  background-position: center; /* 背景图居中显示 */
+  color: transparent; /* 隐藏原本的文字“皮影 · 光影传奇”，避免遮挡图片 */
+}
+
+    .video-thumbnail {
+      width: 100%;
+      height: 180px;
+      background-color: #d2b48c;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .video-info {
+      padding: 1rem;
+    }
+
+    .video-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #8b4513;
+    }
+
+    .video-desc {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    /* 页脚 */
+    .footer {
+      background-color: #8b4513;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="navbar-title">非遗文化短视频</div>
+    <div class="navbar-nav">
+      <a href="#">首页</a>
+      <a href="#">视频分类</a>
+      <a href="#">关于非遗</a>
+    </div>
+  </nav>
+
+  <!-- 核心展示区：图片横向覆盖整个页面 -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-icon"></div>
+      <h1 class="hero-title">短视频里的非遗魅力</h1>
+      <p class="hero-desc">记录非遗制作过程、技艺展示，通过短视频直观感受非遗的独特魅力，让传统技艺在镜头下焕发新生，近距离触摸文化的温度。</p>
+      <a href="#videos" class="btn">观看非遗视频</a>
+    </div>
+  </section>
+
+  <!-- 视频列表区 -->
+  <section class="video-section" id="videos">
+    <h2 class="section-title">精选非遗短视频</h2>
+    <div class="video-grid">
+      <!-- 视频卡片1：剪纸艺术 -->
+      <div class="video-card">
+        <div class="video-thumbnail">剪纸 · 百鸟朝凤</div>
+        <div class="video-info">
+          <h3 class="video-title">剪纸艺术：纸上的生命</h3>
+          <p class="video-desc">跟随非遗传承人，学习“百鸟朝凤”剪纸的精细技法，看纸张如何在剪刀下绽放艺术生命力。</p>
+        </div>
+      </div>
+
+      <!-- 视频卡片2：传统陶艺 -->
+      <div class="video-card">
+        <div class="video-thumbnail">陶艺 · 拉坯工艺</div>
+        <div class="video-info">
+          <h3 class="video-title">陶艺拉坯：泥土的蜕变</h3>
+          <p class="video-desc">陶艺大师演示拉坯、修坯、上釉全过程，揭秘“泥土成器”的千年技艺，感受手工造物的温度。</p>
+        </div>
+      </div>
+
+      <!-- 视频卡片3：苏绣技艺 -->
+      <div class="video-card">
+        <div class="video-thumbnail">苏绣 · 针下生花</div>
+        <div class="video-info">
+          <h3 class="video-title">苏绣：丝线里的江南</h3>
+          <p class="video-desc">苏绣传承人展示“双面绣”绝技，一根丝线劈成十六份，看针线如何在绸缎上绣出灵动花鸟。</p>
+        </div>
+      </div>
+
+      <!-- 视频卡片4：皮影戏 -->
+      <div class="video-card">
+        <div class="video-thumbnail">皮影 · 光影传奇</div>
+        <div class="video-info">
+          <h3 class="video-title">皮影戏：幕后的故事</h3>
+          <p class="video-desc">探索皮影从“牛皮雕刻”到“光影表演”的全流程，感受这门古老民间艺术的独特叙事力。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <p>© 2025 非遗文化短视频平台 | 传承传统技艺，记录文化之美</p>
+  </footer>
+</body>
+</html>
