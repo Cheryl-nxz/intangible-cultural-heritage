@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>非遗健康指数 - 非遗基因解码者</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #D2691E;
+            --accent-color: #F4A460;
+            --light-color: #FAEBD7;
+            --dark-color: #5D4037;
+            --text-color: #333;
+            --light-text: #fff;
+        }
+        
+        body {
+            background-color: #f9f5f0;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+        }
+        
+        .nav-links a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-actions a {
+            color: var(--light-text);
+            text-decoration: none;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-actions i {
+            margin-right: 5px;
+        }
+        
+        /* 非遗健康指数展示区 */
+        .health-showcase {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("https://img.zcool.cn/community/01f9e55c2c0a85a801208f8c4f7b1a.jpg@1280w_1l_2o_100sh.jpg");
+            background-size: cover;
+            background-position: center;
+            color: var(--light-text);
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .health-showcase h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .health-showcase p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 折线图区域样式 */
+        .chart-section {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+        
+        .chart-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        /* 非遗健康指数列表样式 */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .health-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .health-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .health-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--light-color);
+            border-bottom: 1px solid #eee;
+        }
+        
+        .rank {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-right: 15px;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .health-score {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .health-score i {
+            margin-right: 5px;
+        }
+        
+        .card-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .health-card:hover .card-img img {
+            transform: scale(1.1);
+        }
+        
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .card-content p {
+            color: #666;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .status-tag {
+            background-color: var(--light-color);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: var(--dark-color);
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: var(--dark-color);
+            color: var(--light-text);
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            color: var(--light-text);
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .nav-links {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 5px 10px;
+            }
+            
+            .user-actions {
+                margin-top: 15px;
+            }
+            
+            .health-showcase h1 {
+                font-size: 2.2rem;
+            }
+            
+            .health-showcase p {
+                font-size: 1rem;
+            }
+            
+            .health-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-dna"></i>
+                    <span>非遗基因解码者</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="heritage.html" class="active">非遗展示</a></li>
+                    <li><a href="intelligent-qa.html">智能问答</a></li>
+                    <li><a href="videos.html">短视频</a></li>
+                    <li><a href="ai-creation.html">AI创作</a></li>
+                    <li><a href="booking.html">预约体验</a></li>
+                </ul>
+                <div class="user-actions">
+                    <a href="login.html"><i class="fas fa-user"></i> 登录</a>
+                    <a href="personal.html"><i class="fas fa-user-circle"></i> 个人中心</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 非遗健康指数展示区 -->
+    <section class="health-showcase">
+        <div class="container">
+            <h1>非遗健康指数</h1>
+            <p>基于大数据与AI分析的非物质文化遗产健康度评估，帮助您了解非遗项目的传承现状与发展潜力</p>
+            <a href="#health-list" class="btn">查看健康指数排名</a>
+        </div>
+    </section>
+
+    <!-- 折线图区域 -->
+    <section class="section">
+        <div class="container">
+            <div class="chart-section">
+                <h3 class="chart-title">非遗健康指数趋势图 (前十名与最后十名对比)</h3>
+                <div class="chart-container">
+                    <canvas id="healthChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 非遗健康指数列表 -->
+    <section class="section" id="health-list">
+        <div class="container">
+            <div class="section-title">
+                <h2>非遗健康指数排名</h2>
+            </div>
+            <div class="health-cards">
+                <!-- 非遗项目1 -->
+                <div class="health-card">
+                    <div class="card-header">
+                        <div class="rank">1</div>
+                        <h3>景德镇手工制瓷技艺</h3>
+                        <div class="health-score">
+                            <i class="fas fa-heartbeat"></i> 95
+                        </div>
+                    </div>
+                    <div class="card-img">
+                        <img src="https://ts1.cn.mm.bing.net/th/id/R-C.77cc5a8954f4e64fb3919774c21b1eac?rik=n%2bbIahBDCRpWbg&riu=http%3a%2f%2fe0.ifengimg.com%2f04%2f2019%2f0301%2fAEB7BAC7CE8DB64F08D68F6656B44F1C768AFE65_size308_w640_h426.png&ehk=cFCj4q73GoMU3ECzwxspXtBtAWKlzs7g3q46IbLHw2M%3d&risl=&pid=ImgRaw&r=0" alt="景德镇手工制瓷技艺">
+                    </div>
+                    <div class="card-content">
+                        <p>千年瓷都景德镇的传统手工制瓷技艺，以其精湛工艺和独特美学闻名于世。该技艺传承良好，市场接受度高，年轻一代传承人数量稳定增长。</p>
+                        <div class="card-footer">
+                            <span class="status-tag">传承良好</span>
+                            <a href="heritage-detail.html" class="btn">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 非遗项目2 -->
+                <div class="health-card">
+                    <div class="card-header">
+                        <div class="rank">2</div>
+                        <h3>壮族织锦技艺</h3>
+                        <div class="health-score">
+                            <i class="fas fa-heartbeat"></i> 92
+                        </div>
+                    </div>
+                    <div class="card-img">
+                        <img src="https://ts1.cn.mm.bing.net/th/id/R-C.9ea1ae568a6a4d394d5eda0ac466b90b?rik=eFoyVnyDP30PLA&riu=http%3a%2f%2fwww.hzswhg.org.cn%2fupload%2fimages%2f2022%2f7%2fec9c76db8ab6dd58.JPG&ehk=XEbQ20VY8x3YYfL6kHodB1RW3sLn0OUFk1nfC177Ngk%3d&risl=&pid=ImgRaw&r=0" alt="壮族织锦技艺">
+                    </div>
+                    <div class="card-content">
+                        <p>壮族传统织锦技艺，图案精美，色彩鲜艳，承载着壮族人民的智慧与文化。近年来通过文创产品开发，市场影响力持续扩大。</p>
+                        <div class="card-footer">
+                            <span class="status-tag">稳步发展</span>
+                            <a href="heritage-detail.html" class="btn">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 非遗项目3 -->
+                <div class="health-card">
+                    <div class="card-header">
+                        <div class="rank">3</div>
+                        <h3>皮影戏</h3>
+                        <div class="health-score">
+                            <i class="fas fa-heartbeat"></i> 88
+                        </div>
+                    </div>
+                    <div class="card-img">
+                        <img src="https://ts1.cn.mm.bing.net/th/id/R-C.5c3b8d3d6c3a3d3a3d3a3d3a3d3a3d3a?rik=3d3a3d3a3d3a3d3a&riu=http%3a%2f%2fwww.china.com.cn%2fculture%2fphoto%2f2019-06%2f13%2fcontent_74867868_3.jpg&ehk=3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a&risl=&pid=ImgRaw&r=0" alt="皮影戏">
+                    </div>
+                    <div class="card-content">
+                        <p>中国传统皮影戏，通过光影艺术讲述故事，是民间戏剧的重要形式。近年来通过创新表演形式和内容，吸引了年轻观众群体。</p>
+                        <div class="card-footer">
+                            <span class="status-tag">创新发展</span>
+                            <a href="heritage-detail.html" class="btn">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 非遗项目4 -->
+                <div class="health-card">
+                    <div class="card-header">
+                        <div class="rank">4</div>
+                        <h3>苏绣技艺</h3>
+                        <div class="health-score">
+                            <i class="fas fa-heartbeat"></i> 85
+                        </div>
+                    </div>
+                    <div class="card-img">
+                        <img src="https://ts1.cn.mm.bing.net/th/id/R-C.3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a?rik=3d3a3d3a3d3a3d3a&riu=http%3a%2f%2fwww.china.com.cn%2fculture%2fphoto%2f2019-06%2f13%2fcontent_74867868_4.jpg&ehk=3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a&risl=&pid=ImgRaw&r=0" alt="苏绣技艺">
+                    </div>
+                    <div class="card-content">
+                        <p>苏州刺绣技艺，以精细的针法和丰富的色彩著称，是中国四大名绣之一。高端定制市场稳定，但大众市场接受度有待提高。</p>
+                        <div class="card-footer">
+                            <span class="status-tag">稳定传承</span>
+                            <a href="heritage-detail.html" class="btn">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 非遗项目5 -->
+                <div class="health-card">
+                    <div class="card-header">
+                        <div class="rank">5</div>
+                        <h3>唐卡绘画</h3>
+                        <div class="health-score">
+                            <i class="fas fa-heartbeat"></i> 82
+                        </div>
+                    </div>
+                    <div class="card-img">
+                        <img src="https://ts1.cn.mm.bing.net/th/id/R-C.3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a?rik=3d3a3d3a3d3a3d3a&riu=http%3a%2f%2fwww.china.com.cn%2fculture%2fphoto%2f2019-06%2f13%2fcontent_74867868_5.jpg&ehk=3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a&risl=&pid=ImgRaw&r=0" alt="唐卡绘画">
+                    </div>
+                    <div class="card-content">
+                        <p>藏传佛教绘画艺术，以其精细的笔触和丰富的宗教内涵著称。传承面临挑战，但近年来通过艺术展览和文创产品有所改善。</p>
+                        <div class="card-footer">
+                            <span class="status-tag">面临挑战</span>
+                            <a href="heritage-detail.html" class="btn">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 非遗项目6 -->
+                <div class="health-card">
+                    <div class="card-header">
+                        <div class="rank">6</div>
+                        <h3>竹编技艺</h3>
+                        <div class="health-score">
+                            <i class="fas fa-heartbeat"></i> 78
+                        </div>
+                    </div>
+                    <div class="card-img">
+                        <img src="https://ts1.cn.mm.bing.net/th/id/R-C.3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a?rik=3d3a3d3a3d3a3d3a&riu=http%3a%2f%2fwww.china.com.cn%2fculture%2fphoto%2f2019-06%2f13%2fcontent_74867868_6.jpg&ehk=3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a3d3a&risl=&pid=ImgRaw&r=0" alt="竹编技艺">
+                    </div>
+                    <div class="card-content">
+                        <p>传统竹编技艺，利用竹子制作各种实用和装饰品。面临现代化产品的竞争，但通过设计创新和环保理念正在重新获得市场。</p>
+                        <div class="card-footer">
+                            <span class="status-tag">转型中</span>
+                            <a href="heritage-detail.html" class="btn">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>非遗基因解码者</h3>
+                    <p>基于大模型的非遗文化传承与创新平台，致力于非物质文化遗产的保护、传播与创新。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="heritage.html">非遗展示</a></li>
+                        <li><a href="intelligent-qa.html">智能问答</a></li>
+                        <li><a href="videos.html">短视频</a></li>
+                        <li><a href="ai-creation.html">AI创作</a></li>
+                        <li><a href="booking.html">预约体验</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 南京市栖霞区仙林街道文苑路9号</li>
+                        <li><i class="fas fa-phone"></i>188-5169-9602</li>
+                        <li><i class="fas fa-envelope"></i> 3219565859@qq.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 非遗基因解码者 - 基于大模型的个性定制平台 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 卡片悬停效果增强
+            const cards = document.querySelectorAll('.health-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // 按钮点击效果
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+            
+            // 检查用户登录状态
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                const user = JSON.parse(currentUser);
+                const userActions = document.querySelector('.user-actions');
+                userActions.innerHTML = `
+                    <a href="personal.html"><i class="fas fa-user-circle"></i> ${user.username}</a>
+                    <a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> 退出</a>
+                `;
+                
+                document.getElementById('logout').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('currentUser');
+                    window.location.reload();
+                });
+            }
+            
+            // 健康指数颜色设置
+            const healthScores = document.querySelectorAll('.health-score');
+            healthScores.forEach(score => {
+                const scoreValue = parseInt(score.textContent);
+                if (scoreValue >= 90) {
+                    score.style.backgroundColor = '#4CAF50'; // 绿色
+                } else if (scoreValue >= 80) {
+                    score.style.backgroundColor = '#8BC34A'; // 浅绿色
+                } else if (scoreValue >= 70) {
+                    score.style.backgroundColor = '#FFC107'; // 黄色
+                } else if (scoreValue >= 60) {
+                    score.style.backgroundColor = '#FF9800'; // 橙色
+                } else {
+                    score.style.backgroundColor = '#F44336'; // 红色
+                }
+            });
+            
+            // 创建折线图
+            const ctx = document.getElementById('healthChart').getContext('2d');
+            
+            // 模拟数据 - 前十名和最后十名非遗项目
+            const topTenNames = [
+                '景德镇手工制瓷技艺', '壮族织锦技艺', '皮影戏', '苏绣技艺', '唐卡绘画',
+                '竹编技艺', '木版年画', '剪纸艺术', '泥塑技艺', '传统戏曲'
+            ];
+            
+            const bottomTenNames = [
+                '彝族火把节', '赫哲族鱼皮衣制作', '羌族多声部民歌', '佤族木鼓舞', '水族马尾绣',
+                '毛南族肥套', '仫佬族依饭节', '布朗族弹唱', '塔吉克族鹰舞', '独龙族文面'
+            ];
+            
+            // 前十名健康指数（较高）
+            const topTenScores = [95, 92, 88, 85, 82, 78, 75, 72, 68, 65];
+            
+            // 最后十名健康指数（较低，使用特别小众的非遗）
+            const bottomTenScores = [42, 38, 35, 32, 28, 25, 22, 18, 15, 12];
+            
+            // 合并数据用于图表，中间添加省略号
+            const chartLabels = [...topTenNames, '...', ...bottomTenNames];
+            const chartData = [...topTenScores, null, ...bottomTenScores];
+            
+            // 创建折线图
+            const healthChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        label: '非遗健康指数',
+                        data: chartData,
+                        backgroundColor: 'rgba(139, 69, 19, 0.1)',
+                        borderColor: function(context) {
+                            const index = context.dataIndex;
+                            if (index < 10) {
+                                return 'rgba(76, 175, 80, 1)'; // 前十名绿色
+                            } else if (index === 10) {
+                                return 'transparent'; // 省略号处透明
+                            } else {
+                                return 'rgba(244, 67, 54, 1)'; // 后十名红色
+                            }
+                        },
+                        borderWidth: 2,
+                        pointBackgroundColor: function(context) {
+                            const index = context.dataIndex;
+                            if (index < 10) {
+                                return 'rgba(76, 175, 80, 1)'; // 前十名绿色
+                            } else if (index === 10) {
+                                return 'transparent'; // 省略号处透明
+                            } else {
+                                return 'rgba(244, 67, 54, 1)'; // 后十名红色
+                            }
+                        },
+                        pointBorderColor: 'rgba(255, 255, 255, 1)',
+                        pointBorderWidth: 2,
+                        pointRadius: function(context) {
+                            const index = context.dataIndex;
+                            return index === 10 ? 0 : 5; // 省略号处不显示点
+                        },
+                        tension: 0.1,
+                        fill: true,
+                        segment: {
+                            borderColor: function(ctx) {
+                                const index = ctx.p0DataIndex;
+                                if (index === 9) {
+                                    return 'transparent'; // 前十名和后十名之间断开
+                                }
+                                return ctx.p0.parsed.y > 60 ? 'rgba(76, 175, 80, 1)' : 'rgba(244, 67, 54, 1)';
+                            },
+                            borderDash: function(ctx) {
+                                const index = ctx.p0DataIndex;
+                                if (index === 9) {
+                                    return [5, 5]; // 前十名和后十名之间使用虚线
+                                }
+                                return [];
+                            }
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: '健康指数'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                maxRotation: 45,
+                                minRotation: 45,
+                                callback: function(value, index) {
+                                    // 省略号处特殊处理
+                                    if (index === 10) {
+                                        return '...';
+                                    }
+                                    return this.getLabelForValue(value);
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: '非遗项目'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    if (context.dataIndex === 10) {
+                                        return null; // 省略号处不显示提示
+                                    }
+                                    return `健康指数: ${context.parsed.y}`;
+                                },
+                                title: function(context) {
+                                    if (context[0].dataIndex === 10) {
+                                        return '中间省略部分项目';
+                                    }
+                                    return context[0].label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
