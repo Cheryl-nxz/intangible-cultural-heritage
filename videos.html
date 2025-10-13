@@ -36,33 +36,150 @@
             padding: 0 20px;
         }
 
-    /* 导航栏 */
+    /* 导航栏样式 - 与index.html保持一致 */
+    header {
+        background-color: var(--primary-color);
+        color: var(--light-text);
+        padding: 15px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    
     .navbar {
-      background-color: #8b4513;
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      position: relative;
-      z-index: 10; /* 确保导航栏在背景图上方 */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
-
-    .navbar-title {
-      font-size: 1.5rem;
-      font-weight: bold;
+    
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
     }
-
-    .navbar-nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 1rem;
-      transition: color 0.3s ease;
+    
+    .logo i {
+        margin-right: 10px;
+        color: var(--accent-color);
     }
-
-    .navbar-nav a:hover {
-      color: #ffcc99;
+    
+    .nav-links {
+        display: flex;
+        list-style: none;
+        align-items: center;
+    }
+    
+    .nav-links li {
+        margin-left: 25px;
+        position: relative;
+    }
+    
+    .nav-links a {
+        color: var(--light-text);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+    
+    .nav-links a:hover {
+        color: var(--accent-color);
+    }
+    
+    .user-actions {
+        display: flex;
+        align-items: center;
+    }
+    
+    .user-actions a {
+        color: var(--light-text);
+        text-decoration: none;
+        margin-left: 15px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .user-actions i {
+        margin-right: 5px;
+    }
+    
+    /* 搜索框样式 */
+    .search-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    
+    .search-input {
+        padding: 8px 15px;
+        padding-right: 40px;
+        border: none;
+        border-radius: 20px;
+        background-color: rgba(255, 255, 255, 0.2);
+        color: var(--light-text);
+        width: 200px;
+        transition: all 0.3s;
+        font-size: 14px;
+    }
+    
+    .search-input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .search-input:focus {
+        outline: none;
+        background-color: rgba(255, 255, 255, 0.3);
+        width: 250px;
+    }
+    
+    .search-btn {
+        position: absolute;
+        right: 10px;
+        background: none;
+        border: none;
+        color: var(--light-text);
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+    
+    .search-btn:hover {
+        color: var(--accent-color);
+    }
+    
+    /* 下拉菜单样式 */
+    .dropdown {
+        position: relative;
+    }
+    
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 160px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        z-index: 1;
+        border-radius: 5px;
+        overflow: hidden;
+        top: 100%;
+        left: 0;
+    }
+    
+    .dropdown-content a {
+        color: var(--text-color);
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        transition: background-color 0.3s;
+    }
+    
+    .dropdown-content a:hover {
+        background-color: var(--light-color);
+        color: var(--primary-color);
+    }
+    
+    .dropdown:hover .dropdown-content {
+        display: block;
     }
 
     /* 核心展示区（Hero Section）- 图片横向覆盖整个页面 */
@@ -202,139 +319,178 @@
         
     .btn {
       display: inline-block;
-      background-color: #f4a460;
-      color: white;
-      padding: 0.8rem 2rem;
-      border-radius: 50px;
+      background-color: var(--accent-color);
+      color: var(--dark-color);
+      padding: 12px 30px;
+      border-radius: 30px;
       text-decoration: none;
       font-weight: bold;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
     }
 
     .btn:hover {
-      background-color: #cd853f;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+      background-color: var(--secondary-color);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
     /* 视频列表区域 */
     .video-section {
-      padding: 3rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
+      padding: 80px 0;
     }
 
     .section-title {
-      font-size: 1.8rem;
-      color: #8b4513;
-      margin-bottom: 2rem;
       text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+    
+    .section-title h2 {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        display: inline-block;
+        padding-bottom: 10px;
+    }
+    
+    .section-title h2::after {
+        content: '';
+        position: absolute;
+        width: 80px;
+        height: 3px;
+        background-color: var(--accent-color);
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .video-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 2rem;
+      gap: 30px;
     }
 
     .video-card {
       background-color: white;
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
     }
 
     .video-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-10px);
     }
 
-    /* 剪纸视频卡片的封面背景图 */
-    .video-card:nth-child(1) .video-thumbnail {
-      background-image: url("images/VCG211427348587.jpg"); /* 替换为实际图片路径/在线链接 */
-      background-size: cover;   /* 背景图自适应覆盖容器 */
-      background-position: center; /* 背景图居中显示 */
-      color: transparent; /* 隐藏原本的文字，避免遮挡图片 */
-    }
-
-    /* 陶艺视频卡片的封面背景图 */
-    .video-card:nth-child(2) .video-thumbnail {
-      background-image: url("images/VCG211356955925.jpg"); /* 替换为实际图片路径/在线链接 */
-      background-size: cover;   /* 背景图自适应覆盖容器 */
-      background-position: center; /* 背景图居中显示 */
-      color: transparent; /* 隐藏原本的文字，避免遮挡图片 */
-    }
-
-    /* 苏绣视频卡片的封面背景图 */
-    .video-card:nth-child(3) .video-thumbnail {
-      background-image: url("images/VCG211433422786.jpg"); /* 替换为实际图片路径/在线链接 */
-      background-size: cover;   /* 背景图自适应覆盖容器 */
-      background-position: center; /* 背景图居中显示 */
-      color: transparent; /* 隐藏原本的文字，避免遮挡图片 */
-    }
-
-    /* 皮影戏视频卡片的封面背景图 */
-    .video-card:nth-child(4) .video-thumbnail {
-      background-image: url("images/VCG211398452703.jpg"); /* 替换为实际图片路径/在线链接 */
-      background-size: cover;   /* 背景图自适应覆盖容器 */
-      background-position: center; /* 背景图居中显示 */
-      color: transparent; /* 隐藏原本的文字，避免遮挡图片 */
-    }
-
-    /* 唐卡视频卡片的封面背景图 */
-    .video-card:nth-child(5) .video-thumbnail {
-      background-image: url("images/VCG211363135491.jpg"); /* 替换为实际图片路径/在线链接 */
-      background-size: cover;   /* 背景图自适应覆盖容器 */
-      background-position: center; /* 背景图居中显示 */
-      color: transparent; /* 隐藏原本的文字，避免遮挡图片 */
-    }
-
-    /* 竹编视频卡片的封面背景图 */
-    .video-card:nth-child(6) .video-thumbnail {
-      background-image: url("images/VCG211417567052.jpg"); /* 替换为实际图片路径/在线链接 */
-      background-size: cover;   /* 背景图自适应覆盖容器 */
-      background-position: center; /* 背景图居中显示 */
-      color: transparent; /* 隐藏原本的文字，避免遮挡图片 */
-    }
-
+    /* 视频卡片封面样式 */
     .video-thumbnail {
       width: 100%;
-      height: 180px;
+      height: 200px;
       background-color: #d2b48c;
       display: flex;
       justify-content: center;
       align-items: center;
       color: white;
       font-size: 1.2rem;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .video-card:hover .video-thumbnail img {
+      transform: scale(1.1);
     }
 
     .video-info {
-      padding: 1rem;
+      padding: 20px;
     }
 
     .video-title {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-      color: #8b4513;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: var(--primary-color);
     }
 
     .video-desc {
       color: #666;
-      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+        .navbar {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .nav-links {
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .nav-links li {
+            margin: 5px 10px;
+        }
+        
+        .user-actions {
+            margin-top: 15px;
+        }
+        
+        .search-input {
+            width: 150px;
+        }
+        
+        .search-input:focus {
+            width: 180px;
+        }
+        
+        .hero-title {
+            font-size: 2.2rem;
+        }
+        
+        .hero-desc {
+            font-size: 1rem;
+        }
     }
   </style>
 </head>
 <body>
-  <!-- 导航栏 -->
-  <nav class="navbar">
-    <div class="navbar-title">非遗文化短视频</div>
-    <div class="navbar-nav">
-      <a href="#">首页</a>
-      <a href="#">视频分类</a>
-      <a href="#">关于非遗</a>
+  <!-- 导航栏 - 与index.html保持一致，但将"短视频"改为搜索框 -->
+  <header>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-dna"></i>
+                <span>非遗基因解码者</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="heritage.html">非遗展示</a></li>
+                <li><a href="intelligent-qa.html">智能问答</a></li>
+                <li class="search-container">
+                    <input type="text" class="search-input" placeholder="搜索非遗短视频...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </li>
+                <li><a href="ai-creation.html">AI创作</a></li>
+                <li><a href="booking.html">预约体验</a></li>
+                <li class="dropdown">
+                    <a href="#">关于非遗 <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#">非遗简介</a>
+                        <a href="#">保护政策</a>
+                        <a href="#">传承人故事</a>
+                        <a href="#">非遗动态</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="user-actions">
+                <a href="login.html"><i class="fas fa-user"></i> 登录</a>
+                <a href="personal.html"><i class="fas fa-user-circle"></i> 个人中心</a>
+            </div>
+        </nav>
     </div>
-  </nav>
+  </header>
 
   <!-- 核心展示区：图片横向覆盖整个页面 -->
   <section class="hero">
@@ -348,62 +504,84 @@
 
   <!-- 视频列表区 -->
   <section class="video-section" id="videos">
-    <h2 class="section-title">精选非遗短视频</h2>
-    <div class="video-grid">
-      <!-- 视频卡片1：剪纸艺术 -->
-      <div class="video-card">
-        <div class="video-thumbnail">剪纸 · 百鸟朝凤</div>
-        <div class="video-info">
-          <h3 class="video-title">剪纸艺术：纸上的生命</h3>
-          <p class="video-desc">跟随非遗传承人，学习"百鸟朝凤"剪纸的精细技法，看纸张如何在剪刀下绽放艺术生命力。</p>
-        </div>
+    <div class="container">
+      <div class="section-title">
+        <h2>精选非遗短视频</h2>
       </div>
-
-      <!-- 视频卡片2：传统陶艺 -->
-      <div class="video-card">
-        <div class="video-thumbnail">陶艺 · 拉坯工艺</div>
-        <div class="video-info">
-          <h3 class="video-title">陶艺拉坯：泥土的蜕变</h3>
-          <p class="video-desc">陶艺大师演示拉坯、修坯、上釉全过程，揭秘"泥土成器"的千年技艺，感受手工造物的温度。</p>
+      <div class="video-grid">
+        <!-- 视频卡片1：剪纸艺术 -->
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <img src="images/VCG211427348587.jpg" alt="剪纸艺术">
+          </div>
+          <div class="video-info">
+            <h3 class="video-title">剪纸艺术：纸上的生命</h3>
+            <p class="video-desc">跟随非遗传承人，学习"百鸟朝凤"剪纸的精细技法，看纸张如何在剪刀下绽放艺术生命力。</p>
+            <a href="#" class="btn">观看视频</a>
+          </div>
         </div>
-      </div>
 
-      <!-- 视频卡片3：苏绣技艺 -->
-      <div class="video-card">
-        <div class="video-thumbnail">苏绣 · 针下生花</div>
-        <div class="video-info">
-          <h3 class="video-title">苏绣：丝线里的江南</h3>
-          <p class="video-desc">苏绣传承人展示"双面绣"绝技，一根丝线劈成十六份，看针线如何在绸缎上绣出灵动花鸟。</p>
+        <!-- 视频卡片2：传统陶艺 -->
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <img src="images/VCG211356955925.jpg" alt="传统陶艺">
+          </div>
+          <div class="video-info">
+            <h3 class="video-title">陶艺拉坯：泥土的蜕变</h3>
+            <p class="video-desc">陶艺大师演示拉坯、修坯、上釉全过程，揭秘"泥土成器"的千年技艺，感受手工造物的温度。</p>
+            <a href="#" class="btn">观看视频</a>
+          </div>
         </div>
-      </div>
 
-      <!-- 视频卡片4：皮影戏 -->
-      <div class="video-card">
-        <div class="video-thumbnail">皮影 · 光影传奇</div>
-        <div class="video-info">
-          <h3 class="video-title">皮影戏：幕后的故事</h3>
-          <p class="video-desc">探索皮影从"牛皮雕刻"到"光影表演"的全流程，感受这门古老民间艺术的独特叙事力。</p>
+        <!-- 视频卡片3：苏绣技艺 -->
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <img src="images/VCG211433422786.jpg" alt="苏绣技艺">
+          </div>
+          <div class="video-info">
+            <h3 class="video-title">苏绣：丝线里的江南</h3>
+            <p class="video-desc">苏绣传承人展示"双面绣"绝技，一根丝线劈成十六份，看针线如何在绸缎上绣出灵动花鸟。</p>
+            <a href="#" class="btn">观看视频</a>
+          </div>
         </div>
-      </div>
 
-      <!-- 视频卡片5：唐卡 -->
-      <div class="video-card">
-        <div class="video-thumbnail">唐卡 · 色彩信仰</div>
-        <div class="video-info">
-          <h3 class="video-title">唐卡：色彩里的信仰</h3>
-          <p class="video-desc">观摩画师研磨矿物颜料、勾勒金线，看一幅唐卡如何在虔诚中绘就，承载藏传佛教的庄严与神秘。</p>
+        <!-- 视频卡片4：皮影戏 -->
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <img src="images/VCG211398452703.jpg" alt="皮影戏">
+          </div>
+          <div class="video-info">
+            <h3 class="video-title">皮影戏：幕后的故事</h3>
+            <p class="video-desc">探索皮影从"牛皮雕刻"到"光影表演"的全流程，感受这门古老民间艺术的独特叙事力。</p>
+            <a href="#" class="btn">观看视频</a>
+          </div>
         </div>
-      </div>
 
-      <!-- 视频卡片6：竹编 -->
-      <div class="video-card">
-        <div class="video-thumbnail">竹编 · 竹丝韵律</div>
-        <div class="video-info">
-          <h3 class="video-title">竹编：竹丝的韵律</h3>
-          <p class="video-desc">学习编一只竹篮，看竹篾在指尖穿梭交错，体会"经纬成器"的传统智慧与自然之美。</p>
+        <!-- 视频卡片5：唐卡 -->
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <img src="images/VCG211363135491.jpg" alt="唐卡">
+          </div>
+          <div class="video-info">
+            <h3 class="video-title">唐卡：色彩里的信仰</h3>
+            <p class="video-desc">观摩画师研磨矿物颜料、勾勒金线，看一幅唐卡如何在虔诚中绘就，承载藏传佛教的庄严与神秘。</p>
+            <a href="#" class="btn">观看视频</a>
+          </div>
         </div>
-      </div>
 
+        <!-- 视频卡片6：竹编 -->
+        <div class="video-card">
+          <div class="video-thumbnail">
+            <img src="images/VCG211417567052.jpg" alt="竹编">
+          </div>
+          <div class="video-info">
+            <h3 class="video-title">竹编：竹丝的韵律</h3>
+            <p class="video-desc">学习编一只竹篮，看竹篾在指尖穿梭交错，体会"经纬成器"的传统智慧与自然之美。</p>
+            <a href="#" class="btn">观看视频</a>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -446,5 +624,72 @@
       </div>
     </div>
   </footer>
+  
+  <script>
+    // 简单的交互效果
+    document.addEventListener('DOMContentLoaded', function() {
+        // 卡片悬停效果增强
+        const cards = document.querySelectorAll('.video-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+        
+        // 按钮点击效果
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+        
+        // 搜索功能
+        const searchInput = document.querySelector('.search-input');
+        const searchBtn = document.querySelector('.search-btn');
+        
+        searchBtn.addEventListener('click', function() {
+            performSearch();
+        });
+        
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        
+        function performSearch() {
+            const query = searchInput.value.trim();
+            if (query) {
+                alert(`搜索关键词: ${query}\n搜索功能将在实际网站中实现`);
+                // 在实际应用中，这里会执行搜索逻辑
+            }
+        }
+        
+        // 检查用户登录状态
+        const currentUser = localStorage.getItem('currentUser');
+        if (currentUser) {
+            const user = JSON.parse(currentUser);
+            const userActions = document.querySelector('.user-actions');
+            userActions.innerHTML = `
+                <a href="personal.html"><i class="fas fa-user-circle"></i> ${user.username}</a>
+                <a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> 退出</a>
+            `;
+            
+            document.getElementById('logout').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('currentUser');
+                window.location.reload();
+            });
+        }
+    });
+  </script>
 </body>
 </html>
