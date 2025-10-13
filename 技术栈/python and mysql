@@ -20,3 +20,16 @@ except pymysql.MySQLError as e:
 finally:
     conn.close()
 #可以直接从python的代码中实现将用户数据上传到mysql的数据库中
+#删除操作如下所示
+import pymysql
+
+a=input('输入要删除的学院编号')
+
+conn=pymysql.connect(host='127.0.0.1',port=3306,user='guest',password='123456',db='school',charset='utf8mb4',autocommit=True)
+try:
+    with conn.cursor() as cursor:
+        affected_rows=cursor.execute('delete from `tb_college` where `col_id`=%s',(a,))
+        if affected_rows==1:
+            print('删除成功')
+finally:
+    conn.close()
