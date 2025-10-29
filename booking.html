@@ -152,35 +152,81 @@
             transform: translateX(-50%);
         }
         
+        /* 预约流程和地图布局 */
+        .process-map-container {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 50px;
+            align-items: flex-start;
+        }
+        
+        .process-container {
+            flex: 1;
+        }
+        
+        .map-container {
+            flex: 1;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .map-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .map-caption {
+            padding: 15px;
+            text-align: center;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+        }
+        
+        .map-caption p {
+            margin-bottom: 5px;
+        }
+        
         /* 预约流程说明 */
         .booking-process {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 20px;
         }
         
         .process-step {
-            flex: 1;
-            min-width: 200px;
-            text-align: center;
+            display: flex;
+            align-items: flex-start;
             padding: 20px;
-            margin: 10px;
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
         
         .step-number {
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 40px;
             height: 40px;
-            line-height: 40px;
             background-color: var(--primary-color);
             color: white;
             border-radius: 50%;
-            margin-bottom: 15px;
+            margin-right: 15px;
             font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--primary-color);
         }
         
         /* 表单样式 */
@@ -485,7 +531,7 @@
                 gap: 0;
             }
             
-            .booking-process {
+            .process-map-container {
                 flex-direction: column;
             }
             
@@ -530,32 +576,51 @@
         </div>
     </section>
 
-    <!-- 预约流程说明 -->
+    <!-- 预约流程和地图 -->
     <section class="section">
         <div class="container">
             <div class="section-title">
                 <h2>预约流程</h2>
             </div>
-            <div class="booking-process">
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <h3>输入需求</h3>
-                    <p>描述您想体验的时间、地点和项目类型</p>
+            <div class="process-map-container">
+                <div class="process-container">
+                    <div class="booking-process">
+                        <div class="process-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>输入需求</h3>
+                                <p>描述您想体验的时间、地点和项目类型</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>智能匹配</h3>
+                                <p>AI解析您的需求，匹配非遗基地的活动</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>选择活动</h3>
+                                <p>浏览匹配结果，选择心仪的非遗体验</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3>确认预约</h3>
+                                <p>通过邮件确认，完成预约流程</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <h3>智能匹配</h3>
-                    <p>AI解析您的需求，匹配非遗基地的活动</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <h3>选择活动</h3>
-                    <p>浏览匹配结果，选择心仪的非遗体验</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">4</div>
-                    <h3>确认预约</h3>
-                    <p>通过邮件确认，完成预约流程</p>
+                <div class="map-container">
+                    <img src="下载.png" alt="中国非物质文化遗产分布热力图">
+                    <div class="map-caption">
+                        <p>数据来源：中国非物质文化遗产网 (hichina.cn)</p>
+                        <p>非遗项目数量: 297</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -676,7 +741,7 @@
                 time: "2025-06-15",
                 duration: "3小时",
                 description: "在专业陶瓷艺人的指导下，亲手制作属于自己的陶瓷作品，体验千年瓷都的传统工艺。适合亲子活动和团队建设。",
-                image: "images/VCG211487695446.jpg",
+                image: "VCG211487695446.jpg",
                 capacity: 10,
                 booked: 3,
                 tags: ["手工艺", "亲子", "团队活动", "陶瓷"],
@@ -690,7 +755,7 @@
                 time: "2025-06-20",
                 duration: "2小时",
                 description: "学习壮族传统织锦技艺，亲手编织具有民族特色的图案，感受壮族文化的独特魅力。适合喜欢民族文化的游客。",
-                image: "images/VCG41N1317737835.jpg",
+                image: "VCG41N1317737835.jpg",
                 capacity: 8,
                 booked: 2,
                 tags: ["织锦", "民族文化", "手工", "广西"],
@@ -704,7 +769,7 @@
                 time: "2025-06-25",
                 duration: "2.5小时",
                 description: "跟随剪纸艺术家学习传统剪纸技艺，创作具有吉祥寓意的剪纸作品。适合所有年龄段，特别是喜欢手工艺的游客。",
-                image: "images/VCG211418059775.jpg",
+                image: "VCG211418059775.jpg",
                 capacity: 12,
                 booked: 5,
                 tags: ["剪纸", "手工艺", "西安", "传统艺术"],
@@ -718,7 +783,7 @@
                 time: "2025-07-01",
                 duration: "2小时",
                 description: "学习中国茶道文化，体验传统泡茶技艺，品味不同种类的名茶。适合喜欢安静体验和文化探索的游客。",
-                image: "images/VCG211385086941.jpg",
+                image: "VCG211385086941.jpg",
                 capacity: 6,
                 booked: 1,
                 tags: ["茶艺", "杭州", "文化体验", "品茶"],
@@ -1060,6 +1125,4 @@
         });
     </script>
 </body>
-
 </html>
-
