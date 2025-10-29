@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>景德镇手工制瓷技艺 - 非遗基因解码者</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet"href="common.css">
+    <style>
+        /* 详情页标题区域 */
+        .heritage-title {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 50px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .heritage-title h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .heritage-title p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .main-content {
+            flex: 3;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .sidebar {
+            flex: 1;
+        }
+        
+        .info-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .info-box h3 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .info-list {
+            list-style: none;
+        }
+        
+        .info-list li {
+            margin-bottom: 10px;
+            display: flex;
+        }
+        
+        .info-list strong {
+            min-width: 100px;
+            color: var(--dark-color);
+        }
+        
+        .content-section h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .content-section h2:first-child {
+            margin-top: 0;
+        }
+        
+        .content-section p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .feature-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .img-caption {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: -10px;
+            margin-bottom: 25px;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            
+            .content-section {
+                flex-direction: column;
+            }
+            
+            .heritage-title h1 {
+                font-size: 2.2rem;
+            }
+            
+            .heritage-title p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-dna"></i>
+                    <span>非遗基因解码者</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="heritage.html">非遗展示</a></li>
+                    <li><a href="intelligent-qa.html">智能问答</a></li>
+                    <li><a href="videos.html">短视频</a></li>
+                    <li><a href="ai-creation.html">AI创作</a></li>
+                    <li><a href="booking.html">预约体验</a></li>
+                </ul>
+                <div class="user-actions">
+                    <a href="login.html"><i class="fas fa-user"></i> 登录</a>
+                    <a href="personal.html"><i class="fas fa-user-circle"></i> 个人中心</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 标题区域 -->
+    <section class="heritage-title">
+        <div class="container">
+            <h1>景德镇手工制瓷技艺</h1>
+            <p>千年瓷都的匠心传承，中华陶瓷艺术的瑰宝</p>
+        </div>
+    </section>
+
+    <!-- 内容区域 -->
+    <div class="container">
+        <div class="content-section">
+            <!-- 主要内容 -->
+            <div class="main-content">
+                <h2>概述</h2>
+                <p>景德镇手工制瓷技艺是中国传统手工制瓷技艺的杰出代表，始于汉代，兴于宋元，盛于明清，至今已有1700多年的历史。景德镇素有"瓷都"之称，其手工制瓷工艺集历代名窑之大成，汇各地技艺之精华，形成了独树一帜的手工制瓷工艺生产体系。</p>
+                
+                <img src="https://ts1.tc.mm.bing.net/th/id/R-C.77cc5a8954f4e64fb3919774c21b1eac?rik=n%2bbIahBDCRpWbg&riu=http%3a%2f%2fe0.ifengimg.com%2f04%2f2019%2f0301%2fAEB7BAC7CE8DB64F08D68F6656B44F1C768AFE65_size308_w640_h426.png&ehk=cFCj4q73GoMU3ECzwxspXtBtAWKlzs7g3q46IbLHw2M%3d&risl=&pid=ImgRaw&r=0" alt="景德镇瓷器制作" class="feature-img">
+                <p class="img-caption">景德镇传统手工制瓷工艺</p>
+                
+                <h2>历史渊源</h2>
+                <p>景德镇制瓷历史悠久，早在东汉时期就已开始生产陶瓷。宋代景德年间（1004-1007年），因烧制的瓷器质地优良，深得皇帝喜爱，遂以皇帝年号"景德"为镇名，景德镇由此得名。明清时期，景德镇成为全国制瓷中心，设立了御窑厂，专门为宫廷烧造瓷器。</p>
+                
+                <p>在长期的发展过程中，景德镇瓷器形成了"白如玉、明如镜、薄如纸、声如磬"的独特风格。青花、玲珑、粉彩、颜色釉四大传统名瓷，以及雕塑瓷、薄胎瓷、五彩瓷等，共同构成了景德镇陶瓷艺术的灿烂篇章。</p>
+                
+                <h2>工艺流程</h2>
+                <p>景德镇手工制瓷工艺十分复杂，主要包括以下几个环节：</p>
+                
+                <h3>1. 原料制备</h3>
+                <p>选用优质的高岭土和瓷石，经过淘洗、沉淀、除铁等多道工序，制成纯净的制瓷原料。</p>
+                
+                <h3>2. 成型工艺</h3>
+                <p>采用手工拉坯、印坯、利坯等多种成型方法，其中拉坯是最具代表性的成型技艺。</p>
+                
+                <h3>3. 装饰技法</h3>
+                <p>包括青花、釉里红、粉彩、斗彩、颜色釉等多种装饰手法，每种技法都有其独特的艺术效果。</p>
+                
+                <h3>4. 施釉工艺</h3>
+                <p>采用浸釉、浇釉、吹釉、刷釉等方法，使瓷器表面覆盖一层玻璃质釉料。</p>
+                
+                <h3>5. 烧成技术</h3>
+                <p>传统柴窑烧成技艺是景德镇制瓷工艺的核心，窑火的控制直接影响瓷器的最终品质。</p>
+                
+                <img src="VCG211286851599.jpg" alt="景德镇瓷器烧制" class="feature-img">
+                <p class="img-caption">传统柴窑烧制工艺</p>
+                
+                <h2>艺术特色</h2>
+                <p>景德镇瓷器以其精湛的工艺和独特的艺术风格闻名于世：</p>
+                
+                <ul>
+                    <li><strong>青花瓷</strong>：以钴料在瓷坯上描绘纹饰，施釉后高温烧成，蓝白相映，清新素雅。</li>
+                    <li><strong>粉彩瓷</strong>：在烧成的白瓷上勾绘图案轮廓，再填以色料，经低温烧成，色彩丰富，层次分明。</li>
+                    <li><strong>玲珑瓷</strong>：在坯体上镂雕出米粒状孔洞，施釉后孔洞呈半透明状，玲珑剔透。</li>
+                    <li><strong>颜色釉瓷</strong>：利用各种金属氧化物为着色剂，烧制出绚丽多彩的釉色。</li>
+                </ul>
+                
+                <h2>传承与保护</h2>
+                <p>2006年，景德镇手工制瓷技艺被列入第一批国家级非物质文化遗产名录。近年来，景德镇市政府采取了一系列措施保护和传承这一传统技艺：</p>
+                
+                <ul>
+                    <li>建立陶瓷非物质文化遗产保护中心</li>
+                    <li>扶持老艺人带徒授艺</li>
+                    <li>举办陶瓷文化节和技艺大赛</li>
+                    <li>建设陶瓷文化创意园区</li>
+                    <li>推动陶瓷技艺进校园</li>
+                </ul>
+                
+                <p>同时，景德镇瓷器也在不断创新，与现代设计理念相结合，开发出符合当代审美的新产品，使这一古老技艺焕发新的生机。</p>
+                
+                <h2>作品展示</h2>
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="VCG211338958239.jpg" alt="青花瓷">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="VCG211561604952.jpg" alt="粉彩瓷">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="VCG41N2024489678.jpg" alt="玲珑瓷">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 侧边栏 -->
+            <div class="sidebar">
+                <div class="info-box">
+                    <h3>基本信息</h3>
+                    <ul class="info-list">
+                        <li><strong>中文名称</strong>景德镇手工制瓷技艺</li>
+                        <li><strong>批准时间</strong>2006年5月20日</li>
+                        <li><strong>非遗级别</strong>国家级</li>
+                        <li><strong>遗产编号</strong>Ⅷ-7</li>
+                        <li><strong>申报地区</strong>江西省景德镇市</li>
+                        <li><strong>遗产类别</strong>传统手工技艺</li>
+                        <li><strong>传承人物</strong>陈圣发、王炎生、曹开永、兰国华、黄云鹏</li>
+                    </ul>
+                </div>
+                
+                <div class="info-box">
+                    <h3>相关链接</h3>
+                    <ul class="info-list">
+                        <li><a href="intelligent-qa.html">智能问答</a></li>
+                        <li><a href="videos.html">制作视频</a></li>
+                        <li><a href="ai-creation.html">AI创作瓷器</a></li>
+                        <li><a href="booking.html">预约制瓷体验</a></li>
+                    </ul>
+                </div>
+                
+                <div class="info-box">
+                    <h3>保护单位</h3>
+                    <ul class="info-list">
+                        <li>景德镇市陶瓷非物质文化遗产研究保护中心</li>
+                        <li>景德镇中国陶瓷博物馆</li>
+                        <li>景德镇陶瓷大学</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>非遗基因解码者</h3>
+                    <p>基于大模型的非遗文化传承与创新平台，致力于非物质文化遗产的保护、传播与创新。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="heritage.html">非遗展示</a></li>
+                        <li><a href="intelligent-qa.html">智能问答</a></li>
+                        <li><a href="videos.html">短视频</a></li>
+                        <li><a href="ai-creation.html">AI创作</a></li>
+                        <li><a href="booking.html">预约体验</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 南京市栖霞区仙林街道文苑路9号</li>
+                        <li><i class="fas fa-phone"></i>188-5169-9602</li>
+                        <li><i class="fas fa-envelope"></i> 3219565859@qq.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 非遗基因解码者 - 基于大模型的个性定制平台 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查用户登录状态
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                const user = JSON.parse(currentUser);
+                const userActions = document.querySelector('.user-actions');
+                userActions.innerHTML = `
+                    <a href="personal.html"><i class="fas fa-user-circle"></i> ${user.username}</a>
+                    <a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> 退出</a>
+                `;
+                
+                document.getElementById('logout').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('currentUser');
+                    window.location.reload();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
