@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>故事生成器 - 非遗基因解码者</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 故事生成器特有样式 */
+        .story-generator {
+            padding: 60px 0;
+            background-color: #f9f5f0;
+        }
+        
+        .generator-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .generator-header {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .generator-header h2 {
+            margin-bottom: 10px;
+        }
+        
+        .generator-body {
+            padding: 30px;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+        
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+        
+        .input-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .btn-generate {
+            display: block;
+            width: 100%;
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-generate:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .story-result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--light-color);
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .story-result h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 8px;
+        }
+        
+        .story-content {
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading i {
+            font-size: 24px;
+            color: var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .preset-questions {
+            display: none; /* 隐藏预设示例部分 */
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .generator-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-dna"></i>
+                    <span>非遗基因解码者</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="heritage.html">非遗展示</a></li>
+                    <li><a href="intelligent-qa.html">智能问答</a></li>
+                    <li><a href="videos.html">短视频</a></li>
+                    <li><a href="ai-creation.html">AI创作</a></li>
+                    <li><a href="booking.html">预约体验</a></li>
+                </ul>
+                <div class="user-actions">
+                    <a href="login.html"><i class="fas fa-user"></i> 登录</a>
+                    <a href="personal.html"><i class="fas fa-user-circle"></i> 个人中心</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 故事生成器 -->
+    <section class="story-generator">
+        <div class="container">
+            <div class="generator-container">
+                <div class="generator-header">
+                    <h2>非遗故事生成器</h2>
+                    <p>输入文物或技艺描述，AI为您创作生动有趣的故事</p>
+                </div>
+                <div class="generator-body">
+                    <div class="input-group">
+                        <label for="story-type">故事类型</label>
+                        <select id="story-type">
+                            <option value="historical">历史故事</option>
+                            <option value="legendary">传说故事</option>
+                            <option value="modern">现代演绎</option>
+                            <option value="educational">教育故事</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="story-subject">故事主题/文物</label>
+                        <input type="text" id="story-subject" placeholder="例如：青花瓷、剪纸、皮影戏...">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="story-details">补充描述（可选）</label>
+                        <textarea id="story-details" placeholder="提供更多细节，如时代背景、人物特征、场景等..."></textarea>
+                    </div>
+                    
+                    <button class="btn-generate" id="generate-btn">生成故事</button>
+                    
+                    <div class="loading" id="loading">
+                        <i class="fas fa-spinner"></i>
+                        <p>AI正在创作中，请稍候...</p>
+                    </div>
+                    
+                    <div class="story-result" id="story-result">
+                        <h3>生成的故事</h3>
+                        <div class="story-content" id="story-content"></div>
+                    </div>
+                    
+                    <!-- 预设示例部分已隐藏 -->
+                    <div class="preset-questions">
+                        <h3>预设示例</h3>
+                        <div class="preset-list">
+                            <div class="preset-item" data-subject="青花瓷" data-details="元代景德镇青花瓷，描绘山水人物">
+                                元代青花瓷的故事
+                            </div>
+                            <div class="preset-item" data-subject="剪纸艺术" data-details="北方民间剪纸，春节窗花">
+                                剪纸艺术的起源故事
+                            </div>
+                            <div class="preset-item" data-subject="皮影戏" data-details="陕西皮影戏，讲述三国故事">
+                                皮影戏的传奇故事
+                            </div>
+                            <div class="preset-item" data-subject="景泰蓝" data-details="明代景泰蓝工艺，宫廷御用">
+                                景泰蓝工艺的传承故事
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>非遗基因解码者</h3>
+                    <p>基于大模型的非遗文化传承与创新平台，致力于非物质文化遗产的保护、传播与创新。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="heritage.html">非遗展示</a></li>
+                        <li><a href="intelligent-qa.html">智能问答</a></li>
+                        <li><a href="videos.html">短视频</a></li>
+                        <li><a href="ai-creation.html">AI创作</a></li>
+                        <li><a href="booking.html">预约体验</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 南京市栖霞区仙林街道文苑路9号</li>
+                        <li><i class="fas fa-phone"></i> 188-5169-9602</li>
+                        <li><i class="fas fa-envelope"></i> 3219565859@qq.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 非遗基因解码者 - 基于大模型的个性定制平台 | 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 预设故事数据
+        const storyData = {
+            "青花瓷": {
+                title: "青花瓷的传奇",
+                content: `在元代的景德镇，有一位名叫李青的年轻陶工，他痴迷于陶瓷艺术。一天，他在梦中见到一位仙人，仙人告诉他："用天空的颜色描绘大地，用大地的精华创造永恒。"醒来后，李青深受启发，开始尝试用钴料在白瓷上作画。
+
+经过无数次失败，李青终于掌握了青花瓷的烧制技术。他创作的青花瓷不仅色泽鲜艳，图案精美，更蕴含着深厚的文化内涵。他的作品很快传遍大江南北，甚至远销海外。
+
+李青的青花瓷不仅是一种艺术品，更成为中外文化交流的桥梁。他的技艺代代相传，使青花瓷成为中国陶瓷艺术的瑰宝，至今仍闪耀着迷人的光芒。`
+            },
+            "剪纸艺术": {
+                title: "剪纸的起源",
+                content: `很久以前，在一个小村庄里，住着一位心灵手巧的姑娘叫巧儿。每到冬天，寒风从窗户缝隙中吹进来，让屋内变得寒冷。巧儿想出了一个办法，她用红纸剪出各种吉祥图案贴在窗户上，既挡住了寒风，又增添了节日气氛。
+
+巧儿的剪纸技艺越来越精湛，她能剪出栩栩如生的动物、花卉和人物。村里的姑娘们都来向她学习，剪纸艺术就这样在民间传播开来。
+
+后来，剪纸不仅用于装饰窗户，还成为节日庆典、婚庆喜事的重要元素。巧儿的剪纸艺术代代相传，成为中华民族宝贵的非物质文化遗产，象征着人民对美好生活的向往和祝福。`
+            },
+            "皮影戏": {
+                title: "皮影戏的传奇",
+                content: `相传在汉代，汉武帝因思念已故的李夫人，终日郁郁寡欢。一位名叫少翁的方士为了安慰皇帝，用棉帛裁剪成李夫人的形象，在灯光下投射到帷帐上。汉武帝看到后，仿佛见到了李夫人再生，十分欣慰。这便是皮影戏的雏形。
+
+到了宋代，皮影戏已经发展成为一种成熟的民间艺术形式。艺人们用驴皮或牛皮雕刻成各种人物形象，通过灯光投射到白色幕布上，配合音乐和唱腔，演绎各种历史故事和民间传说。
+
+皮影戏不仅是一种娱乐方式，更是传播历史文化、道德教育的重要载体。它融合了雕刻、绘画、音乐、戏剧等多种艺术形式，是中国民间艺术的瑰宝，被誉为"电影的始祖"。`
+            },
+            "景泰蓝": {
+                title: "景泰蓝的传承",
+                content: `明朝景泰年间，一位宫廷工匠在制作铜器时不小心将釉料洒在了铜胎上。烧制后，他发现这些釉料形成了美丽的蓝色花纹。这一偶然的发现，开启了景泰蓝工艺的辉煌历史。
+
+景泰蓝工艺极为复杂，需要经过制胎、掐丝、点蓝、烧蓝、磨光、镀金等多道工序。每一件景泰蓝作品都是工匠们心血的结晶，凝聚着中国传统工艺的精髓。
+
+清代，景泰蓝工艺达到顶峰，成为宫廷御用的重要工艺品。如今，景泰蓝已被列入国家级非物质文化遗产，其独特的艺术魅力和精湛的制作工艺，继续在世界艺术舞台上闪耀着东方智慧的光芒。`
+            }
+        };
+
+        // 页面交互
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateBtn = document.getElementById('generate-btn');
+            const loading = document.getElementById('loading');
+            const storyResult = document.getElementById('story-result');
+            const storyContent = document.getElementById('story-content');
+            const subjectInput = document.getElementById('story-subject');
+            const detailsInput = document.getElementById('story-details');
+            
+            // 生成故事按钮点击事件
+            generateBtn.addEventListener('click', function() {
+                const subject = subjectInput.value.trim();
+                const details = detailsInput.value.trim();
+                
+                if (!subject) {
+                    alert('请输入故事主题或文物名称');
+                    return;
+                }
+                
+                // 显示加载状态
+                loading.style.display = 'block';
+                storyResult.style.display = 'none';
+                
+                // 模拟AI生成过程
+                setTimeout(function() {
+                    loading.style.display = 'none';
+                    
+                    // 查找匹配的故事或生成默认故事
+                    let story = null;
+                    for (const key in storyData) {
+                        if (subject.includes(key)) {
+                            story = storyData[key];
+                            break;
+                        }
+                    }
+                    
+                    if (!story) {
+                        // 如果没有匹配的预设故事，生成一个通用故事
+                        story = {
+                            title: `${subject}的故事`,
+                            content: `在古老的中国，${subject}承载着深厚的文化内涵和民族智慧。${details ? details + '。' : ''}
+
+这件珍贵的非物质文化遗产见证了中华民族的历史变迁，凝聚了无数匠人的心血与智慧。每一道工序、每一个细节都蕴含着丰富的文化密码，等待着我们去解读和传承。
+
+今天，我们通过现代科技重新审视${subject}，不仅是为了保护这一宝贵的文化遗产，更是为了从中汲取灵感，创造出连接过去与未来的新篇章。`
+                        };
+                    }
+                    
+                    // 显示生成的故事
+                    storyContent.innerHTML = `
+                        <h4>${story.title}</h4>
+                        <p>${story.content}</p>
+                    `;
+                    storyResult.style.display = 'block';
+                    
+                    // 添加按钮点击效果
+                    generateBtn.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        generateBtn.style.transform = '';
+                    }, 200);
+                }, 1500);
+            });
+            
+            // 检查用户登录状态
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                const user = JSON.parse(currentUser);
+                const userActions = document.querySelector('.user-actions');
+                userActions.innerHTML = `
+                    <a href="personal.html"><i class="fas fa-user-circle"></i> ${user.username}</a>
+                    <a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> 退出</a>
+                `;
+                
+                document.getElementById('logout').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('currentUser');
+                    window.location.reload();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
