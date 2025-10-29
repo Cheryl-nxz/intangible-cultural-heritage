@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>非遗文化 · 苏绣视频播放</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft Yahei", sans-serif;
+    }
+
+    body {
+      background-color: #121212;
+      color: #f0f0f0;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 10;
+      position: relative;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .logo i {
+      margin-right: 10px;
+      color: #F4A460;
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      color: #f0f0f0;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 8px 15px;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .back-btn i {
+      margin-right: 8px;
+    }
+
+    .video-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 20px;
+    }
+
+    .video-wrapper {
+      width: 100%;
+      max-width: 1200px;
+      height: auto;
+      max-height: 80vh;
+      background-color: #000;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bilibili-player {
+      width: 100%;
+      height: 100%;
+      min-height: 450px;
+      border: none;
+    }
+
+    .video-info {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 15px;
+      border-radius: 8px;
+      max-width: 400px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 5;
+    }
+
+    .video-wrapper:hover .video-info {
+      opacity: 1;
+    }
+
+    .video-title {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: #F4A460;
+    }
+
+    .video-description {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .loading-indicator {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
+      color: #F4A460;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .loading-text {
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .video-wrapper {
+        max-height: 70vh;
+      }
+      
+      .video-info {
+        max-width: 300px;
+        font-size: 14px;
+      }
+      
+      .video-title {
+        font-size: 18px;
+      }
+    }
+
+    /* 控制提示 */
+    .controls-hint {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .video-wrapper:hover .controls-hint {
+      opacity: 1;
+    }
+    
+    /* 备用提示 */
+    .fallback-message {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 500px;
+      z-index: 10;
+    }
+    
+    .fallback-message h3 {
+      color: #F4A460;
+      margin-bottom: 15px;
+    }
+    
+    .fallback-message ul {
+      text-align: left;
+      margin: 15px 0;
+      padding-left: 20px;
+    }
+    
+    .fallback-message a {
+      color: #F4A460;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 15px;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: rgba(244, 164, 96, 0.2);
+      border-radius: 5px;
+    }
+    
+    .fallback-message a:hover {
+      background-color: rgba(244, 164, 96, 0.4);
+    }
+    
+    .try-again-btn {
+      background-color: #F4A460;
+      color: #5D4037;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 15px;
+      transition: background-color 0.3s;
+    }
+    
+    .try-again-btn:hover {
+      background-color: #D2691E;
+    }
+    
+    /* 视频占位符 */
+    .video-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .video-placeholder i {
+      font-size: 60px;
+      margin-bottom: 20px;
+      color: #F4A460;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <i class="fas fa-dna"></i>
+      <span>非遗基因解码者</span>
+    </div>
+    <a href="videos.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
+      返回视频列表
+    </a>
+  </div>
+
+  <div class="video-container">
+    <div class="loading-indicator" id="loading">
+      <i class="fas fa-spinner fa-spin"></i>
+      <div class="loading-text">正在加载苏绣视频...</div>
+    </div>
+    
+    <div class="video-wrapper">
+      <!-- B站嵌入式播放器 - 使用多种可能的嵌入方式 -->
+      <iframe class="bilibili-player"
+        src="https://player.bilibili.com/player.html?bvid=BV1iwbkeCEgv&page=1&high_quality=1&danmaku=0&autoplay=0"
+        scrolling="no"
+        frameborder="no"
+        allowfullscreen="true"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true">
+      </iframe>
+      
+      <div class="video-info">
+        <h3 class="video-title">苏绣：丝线里的江南</h3>
+        <p class="video-description">苏绣传承人展示"双面绣"绝技，一根丝线劈成十六份，看针线如何在绸缎上绣出灵动花鸟。</p>
+      </div>
+      
+      <div class="controls-hint">
+        使用B站播放器控制：空格键暂停/播放，F键全屏
+      </div>
+    </div>
+    
+
+  </div>
+
+  <script>
+    // 显示加载指示器
+    const loadingIndicator = document.getElementById('loading');
+    const fallbackMessage = document.getElementById('fallbackMessage');
+    const tryAgainBtn = document.getElementById('tryAgainBtn');
+    const iframe = document.querySelector('.bilibili-player');
+    
+    // 检测视频是否加载成功的超时时间（毫秒）
+    const LOAD_TIMEOUT = 10000;
+    let loadTimeoutId;
+    
+    // 当页面加载时显示加载指示器
+    window.addEventListener('load', function() {
+      // 设置超时检测
+      loadTimeoutId = setTimeout(function() {
+        showFallbackMessage('视频加载超时');
+      }, LOAD_TIMEOUT);
+      
+      // 当iframe加载完成时隐藏加载指示器
+      iframe.addEventListener('load', function() {
+        clearTimeout(loadTimeoutId);
+        loadingIndicator.style.display = 'none';
+        
+        // 额外检查：如果iframe高度异常，可能表示加载失败
+        setTimeout(function() {
+          if (iframe.offsetHeight < 100) {
+            showFallbackMessage('视频播放器加载异常');
+          }
+        }, 1000);
+      });
+      
+      // 如果iframe加载失败，也隐藏加载指示器
+      iframe.addEventListener('error', function() {
+        clearTimeout(loadTimeoutId);
+        showFallbackMessage('视频加载失败');
+      });
+    });
+
+    // 显示备用消息
+    function showFallbackMessage(reason) {
+      loadingIndicator.style.display = 'none';
+      fallbackMessage.style.display = 'block';
+      console.log('视频加载失败原因:', reason);
+    }
+    
+    // 重新加载视频
+    tryAgainBtn.addEventListener('click', function() {
+      fallbackMessage.style.display = 'none';
+      loadingIndicator.style.display = 'flex';
+      
+      // 重新设置超时检测
+      loadTimeoutId = setTimeout(function() {
+        showFallbackMessage('视频重新加载超时');
+      }, LOAD_TIMEOUT);
+      
+      // 重新加载iframe
+      iframe.src = iframe.src.replace(/\?.*$/, '') + '?t=' + new Date().getTime();
+    });
+
+    // 键盘快捷键
+    document.addEventListener('keydown', function(e) {
+      // F键切换全屏
+      if (e.code === 'KeyF') {
+        e.preventDefault();
+        const videoWrapper = document.querySelector('.video-wrapper');
+        if (!document.fullscreenElement) {
+          if (videoWrapper.requestFullscreen) {
+            videoWrapper.requestFullscreen();
+          } else if (videoWrapper.webkitRequestFullscreen) {
+            videoWrapper.webkitRequestFullscreen();
+          } else if (videoWrapper.msRequestFullscreen) {
+            videoWrapper.msRequestFullscreen();
+          }
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+          } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+          }
+        }
+      }
+    });
+    
+    // 尝试使用备用嵌入方法
+    function tryAlternativeEmbed() {
+      // 方法1: 使用不同的嵌入参数
+      const alternativeSrc1 = "https://player.bilibili.com/player.html?bvid=BV1iwbkeCEgv&page=1&high_quality=1&danmaku=0&autoplay=0";
+      
+      // 方法2: 使用aid参数替代bvid
+      const alternativeSrc2 = "https://player.bilibili.com/player.html?aid=842763466&page=1&high_quality=1&danmaku=0&autoplay=0";
+      
+      // 这里可以添加更多备选方案
+      return [alternativeSrc1, alternativeSrc2];
+    }
+  </script>
+</body>
+</html>
