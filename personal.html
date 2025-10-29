@@ -4,13 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人中心 - 非遗基因解码者</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="common.css">
     <style>
-        /* 使用与主页面相同的样式，添加个人中心特有样式 */
+        /* 个人中心特有样式 */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("images/ZEDVGTeS3THwt.jpg");
+            background-size: cover;
+            background-position: center;
+            color: var(--light-text);
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
         .user-profile {
             background: white;
             border-radius: 10px;
             padding: 30px;
-            margin: 20px 0;
+            margin: 40px 0;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
         
@@ -18,29 +41,34 @@
             display: flex;
             align-items: center;
             margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
         }
         
         .avatar {
-            width: 80px;
-            height: 80px;
-            background-color: #3498db;
+            width: 100px;
+            height: 100px;
+            background-color: var(--primary-color);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 24px;
+            font-size: 36px;
             font-weight: bold;
-            margin-right: 20px;
+            margin-right: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         
         .profile-info h2 {
-            color: #2c3e50;
-            margin-bottom: 5px;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
         }
         
         .profile-info p {
-            color: #7f8c8d;
+            color: var(--text-color);
+            margin-bottom: 5px;
         }
         
         .profile-stats {
@@ -52,55 +80,126 @@
         
         .stat-card {
             background: #f8f9fa;
-            padding: 20px;
+            padding: 25px;
             border-radius: 8px;
             text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
         
         .stat-number {
-            font-size: 24px;
+            font-size: 32px;
             font-weight: bold;
-            color: #3498db;
-            margin-bottom: 5px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
         }
         
         .stat-label {
-            color: #7f8c8d;
-            font-size: 14px;
+            color: var(--dark-color);
+            font-size: 16px;
+            font-weight: 500;
         }
         
         .profile-actions {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             flex-wrap: wrap;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
         }
         
         .action-btn {
-            padding: 8px 16px;
-            background: #ecf0f1;
+            padding: 12px 24px;
+            background: var(--light-color);
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            font-weight: 500;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .action-btn:hover {
-            background: #d5dbdb;
+            background: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .avatar {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .profile-actions {
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- 使用与主页面相同的导航栏 -->
+    <!-- 导航栏 -->
     <header>
         <div class="container">
             <nav class="navbar">
-                <div class="logo">非遗<span>基因解码者</span></div>
+                <div class="logo">
+                    <i class="fas fa-dna"></i>
+                    <span>非遗基因解码者</span>
+                </div>
                 <ul class="nav-links">
                     <li><a href="index.html">首页</a></li>
+                    <li><a href="heritage.html">非遗展示</a></li>
                     <li><a href="intelligent-qa.html">智能问答</a></li>
+                    <li><a href="videos.html">短视频</a></li>
                     <li><a href="ai-creation.html">AI创作</a></li>
                     <li><a href="booking.html">预约体验</a></li>
-                    <li><a href="about.html">关于我们</a></li>
                 </ul>
                 <div class="user-center">
                     <div id="user-info" style="display: none;">
@@ -116,7 +215,8 @@
     </header>
 
     <main>
-        <section class="hero" style="padding: 40px 0;">
+        <!-- 个人中心横幅 -->
+        <section class="hero">
             <div class="container">
                 <h1>个人中心</h1>
                 <p>管理您的个人信息和活动记录</p>
@@ -124,6 +224,10 @@
         </section>
 
         <div class="container">
+            <div class="section-title">
+                <h2>个人信息</h2>
+            </div>
+            
             <div class="user-profile">
                 <div class="profile-header">
                     <div class="avatar" id="user-avatar">用户</div>
@@ -132,6 +236,10 @@
                         <p id="profile-email">邮箱</p>
                         <p>注册时间: <span id="profile-join-date"></span></p>
                     </div>
+                </div>
+                
+                <div class="section-title">
+                    <h2>活动统计</h2>
                 </div>
                 
                 <div class="profile-stats">
@@ -150,29 +258,59 @@
                 </div>
                 
                 <div class="profile-actions">
-                    <button class="action-btn" onclick="editProfile()">编辑资料</button>
-                    <button class="action-btn" onclick="viewHistory()">查看历史记录</button>
-                    <button class="action-btn" onclick="changePassword()">修改密码</button>
-                    <button class="action-btn" onclick="logout()">退出登录</button>
+                    <button class="action-btn" onclick="editProfile()">
+                        <i class="fas fa-user-edit"></i> 编辑资料
+                    </button>
+                    <button class="action-btn" onclick="viewHistory()">
+                        <i class="fas fa-history"></i> 查看历史记录
+                    </button>
+                    <button class="action-btn" onclick="changePassword()">
+                        <i class="fas fa-key"></i> 修改密码
+                    </button>
+                    <button class="action-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> 退出登录
+                    </button>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- 使用与主页面相同的页脚 -->
+    <!-- 页脚 -->
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="logo" style="color: white;">非遗<span style="color: #3498db;">基因解码者</span></div>
-                <ul class="footer-links">
-                    <li><a href="index.html">首页</a></li>
-                    <li><a href="intelligent-qa.html">智能问答</a></li>
-                    <li><a href="ai-creation.html">AI创作</a></li>
-                    <li><a href="booking.html">预约体验</a></li>
-                    <li><a href="about.html">关于我们</a></li>
-                    <li><a href="contact.html">联系我们</a></li>
-                </ul>
-                <p class="copyright">© 2025 非遗基因解码者：基于大模型的个性定制平台 版权所有</p>
+                <div class="footer-column">
+                    <h3>非遗基因解码者</h3>
+                    <p>基于大模型的非遗文化传承与创新平台，致力于非物质文化遗产的保护、传播与创新。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="heritage.html">非遗展示</a></li>
+                        <li><a href="intelligent-qa.html">智能问答</a></li>
+                        <li><a href="videos.html">短视频</a></li>
+                        <li><a href="ai-creation.html">AI创作</a></li>
+                        <li><a href="booking.html">预约体验</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 南京市栖霞区仙林街道文苑路9号</li>
+                        <li><i class="fas fa-phone"></i> 188-5169-9602</li>
+                        <li><i class="fas fa-envelope"></i> 3219565859@qq.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 非遗基因解码者 - 基于大模型的个性定制平台 | 版权所有</p>
             </div>
         </div>
     </footer>
