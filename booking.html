@@ -103,7 +103,7 @@
         
         /* 页面标题区 */
         .page-header {
-            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("images/ZEDVGTeS3THwt.jpg");
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("ZEDVGTeS3THwt.jpg");
             background-size: cover;
             background-position: center;
             color: var(--light-text);
@@ -261,6 +261,38 @@
             margin-top: 30px;
         }
         
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .results-count {
+            color: var(--dark-color);
+            font-size: 1.1rem;
+        }
+        
+        .sort-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .sort-btn {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .sort-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
         .results-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -312,6 +344,21 @@
             color: #666;
             margin-bottom: 15px;
             font-size: 0.95rem;
+        }
+        
+        .result-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .tag {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
         }
         
         /* 确认区域 */
@@ -441,6 +488,12 @@
             .booking-process {
                 flex-direction: column;
             }
+            
+            .results-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
@@ -540,9 +593,17 @@
 
             <!-- 匹配结果展示区 -->
             <div id="resultsContainer" class="results-container">
-                <div class="section-title">
-                    <h2>匹配结果</h2>
+                <div class="results-header">
+                    <div class="section-title">
+                        <h2>匹配结果</h2>
+                    </div>
+                    <div class="sort-options">
+                        <button class="sort-btn active" data-sort="relevance">相关度</button>
+                        <button class="sort-btn" data-sort="date">时间</button>
+                        <button class="sort-btn" data-sort="popularity">热度</button>
+                    </div>
                 </div>
+                <p class="results-count" id="resultsCount">找到 <span id="matchCount">0</span> 个匹配活动</p>
                 <div id="resultsGrid" class="results-grid">
                     <!-- 结果将通过JavaScript动态生成 -->
                 </div>
@@ -594,8 +655,8 @@
                     <h3>联系我们</h3>
                     <ul class="footer-links">
                         <li><i class="fas fa-map-marker-alt"></i> 南京市栖霞区仙林街道文苑路9号</li>
-                        <li><i class="fas fa-phone"></i>188-5169-9602</li>
-                        <li><i class="fas fa-envelope"></i> 3219565859@qq.com</li>
+                        <li><i class="fas fa-phone"></i> 400-123-4567</li>
+                        <li><i class="fas fa-envelope"></i> contact@ich-decoder.com</li>
                     </ul>
                 </div>
             </div>
@@ -614,10 +675,13 @@
                 location: "江西景德镇",
                 time: "2025-06-15",
                 duration: "3小时",
-                description: "在专业陶瓷艺人的指导下，亲手制作属于自己的陶瓷作品，体验千年瓷都的传统工艺。",
-                image: "https://ts1.tc.mm.bing.net/th/id/R-C.77cc5a8954f4e64fb3919774c21b1eac?rik=n%2bbIahBDCRpWbg&riu=http%3a%2f%2fe0.ifengimg.com%2f04%2f2019%2f0301%2fAEB7BAC7CE8DB64F08D68F6656B44F1C768AFE65_size308_w640_h426.png&ehk=cFCj4q73GoMU3ECzwxspXtBtAWKlzs7g3q46IbLHw2M%3d&risl=&pid=ImgRaw&r=0",
+                description: "在专业陶瓷艺人的指导下，亲手制作属于自己的陶瓷作品，体验千年瓷都的传统工艺。适合亲子活动和团队建设。",
+                image: "VCG211487695446.jpg",
                 capacity: 10,
-                booked: 3
+                booked: 3,
+                tags: ["手工艺", "亲子", "团队活动", "陶瓷"],
+                popularity: 85,
+                difficulty: "中等"
             },
             {
                 id: 2,
@@ -625,10 +689,13 @@
                 location: "广西南宁",
                 time: "2025-06-20",
                 duration: "2小时",
-                description: "学习壮族传统织锦技艺，亲手编织具有民族特色的图案，感受壮族文化的独特魅力。",
-                image: "https://images.unsplash.com/photo-1558769132-cb25dccda8e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                description: "学习壮族传统织锦技艺，亲手编织具有民族特色的图案，感受壮族文化的独特魅力。适合喜欢民族文化的游客。",
+                image: "VCG41N1317737835.jpg",
                 capacity: 8,
-                booked: 2
+                booked: 2,
+                tags: ["织锦", "民族文化", "手工", "广西"],
+                popularity: 72,
+                difficulty: "简单"
             },
             {
                 id: 3,
@@ -636,10 +703,13 @@
                 location: "陕西西安",
                 time: "2025-06-25",
                 duration: "2.5小时",
-                description: "跟随剪纸艺术家学习传统剪纸技艺，创作具有吉祥寓意的剪纸作品。",
-                image: "https://images.unsplash.com/photo-1544717301-9cdcb1f5940f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                description: "跟随剪纸艺术家学习传统剪纸技艺，创作具有吉祥寓意的剪纸作品。适合所有年龄段，特别是喜欢手工艺的游客。",
+                image: "VCG211418059775.jpg",
                 capacity: 12,
-                booked: 5
+                booked: 5,
+                tags: ["剪纸", "手工艺", "西安", "传统艺术"],
+                popularity: 78,
+                difficulty: "简单"
             },
             {
                 id: 4,
@@ -647,15 +717,76 @@
                 location: "浙江杭州",
                 time: "2025-07-01",
                 duration: "2小时",
-                description: "学习中国茶道文化，体验传统泡茶技艺，品味不同种类的名茶。",
-                image: "https://images.unsplash.com/photo-1563822249366-6a09305b69d2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                description: "学习中国茶道文化，体验传统泡茶技艺，品味不同种类的名茶。适合喜欢安静体验和文化探索的游客。",
+                image: "VCG211385086941.jpg",
                 capacity: 6,
-                booked: 1
+                booked: 1,
+                tags: ["茶艺", "杭州", "文化体验", "品茶"],
+                popularity: 65,
+                difficulty: "简单"
+            },
+            {
+                id: 5,
+                title: "京剧脸谱绘制体验",
+                location: "北京",
+                time: "2025-06-18",
+                duration: "2小时",
+                description: "在专业老师的指导下，学习京剧脸谱知识并亲手绘制属于自己的脸谱作品。适合喜欢传统文化和艺术的游客。",
+                image: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                capacity: 15,
+                booked: 7,
+                tags: ["京剧", "脸谱", "北京", "艺术"],
+                popularity: 80,
+                difficulty: "中等"
+            },
+            {
+                id: 6,
+                title: "苏绣技艺体验",
+                location: "江苏苏州",
+                time: "2025-07-05",
+                duration: "3小时",
+                description: "跟随苏绣传承人学习传统苏绣技艺，亲手制作小型绣品。适合喜欢精细手工艺和传统文化的游客。",
+                image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                capacity: 8,
+                booked: 2,
+                tags: ["苏绣", "苏州", "手工艺", "精细"],
+                popularity: 70,
+                difficulty: "困难"
+            },
+            {
+                id: 7,
+                title: "皮影戏制作与表演体验",
+                location: "陕西西安",
+                time: "2025-06-22",
+                duration: "3.5小时",
+                description: "学习皮影制作技艺，并亲手操作皮影进行简单表演。适合亲子活动和喜欢传统戏剧的游客。",
+                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                capacity: 10,
+                booked: 4,
+                tags: ["皮影戏", "西安", "亲子", "戏剧"],
+                popularity: 75,
+                difficulty: "中等"
+            },
+            {
+                id: 8,
+                title: "传统木版年画制作",
+                location: "天津",
+                time: "2025-07-10",
+                duration: "2.5小时",
+                description: "体验传统木版年画的制作过程，亲手印制属于自己的年画作品。适合喜欢传统艺术和节庆文化的游客。",
+                image: "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                capacity: 12,
+                booked: 3,
+                tags: ["年画", "天津", "传统艺术", "节庆"],
+                popularity: 68,
+                difficulty: "中等"
             }
         ];
 
-        // 当前选中的活动
+        // 当前选中的活动和排序方式
         let selectedActivity = null;
+        let currentSort = 'relevance';
+        let currentResults = [];
 
         // 表单提交事件
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
@@ -677,84 +808,177 @@
         // 匹配活动函数（模拟NLP解析和数据库查询）
         function matchActivities(time, location, project, description) {
             // 在实际应用中，这里会调用后端API进行NLP解析和数据库查询
-            // 这里使用简单的关键词匹配作为演示
+            // 这里使用更精确的关键词匹配作为演示
             
             let matched = [...activities]; // 复制所有活动
             
-            // 根据地点筛选
-            if (location) {
-                matched = matched.filter(activity => 
-                    activity.location.includes(location) || location.includes(activity.location)
-                );
-            }
+            // 计算每个活动的匹配分数
+            matched.forEach(activity => {
+                activity.matchScore = 0;
+                
+                // 根据地点匹配
+                if (location && activity.location.includes(location)) {
+                    activity.matchScore += 30;
+                }
+                
+                // 根据项目类型匹配
+                if (project) {
+                    const projectKeywords = project.split(/[ ,，、]+/);
+                    projectKeywords.forEach(keyword => {
+                        if (activity.title.includes(keyword) || 
+                            activity.description.includes(keyword) || 
+                            activity.tags.some(tag => tag.includes(keyword))) {
+                            activity.matchScore += 20;
+                        }
+                    });
+                }
+                
+                // 根据时间匹配（简化处理）
+                if (time) {
+                    if (time.includes('周末') && isWeekend(activity.time)) {
+                        activity.matchScore += 15;
+                    }
+                    if (time.includes('假期') && isHoliday(activity.time)) {
+                        activity.matchScore += 15;
+                    }
+                }
+                
+                // 根据详细描述匹配
+                if (description) {
+                    const descKeywords = description.split(/[ ,，。！？]+/);
+                    descKeywords.forEach(keyword => {
+                        if (keyword.length > 1 && (
+                            activity.title.includes(keyword) || 
+                            activity.description.includes(keyword) || 
+                            activity.tags.some(tag => tag.includes(keyword)))) {
+                            activity.matchScore += 10;
+                        }
+                    });
+                }
+            });
             
-            // 根据项目类型筛选
-            if (project) {
-                matched = matched.filter(activity => 
-                    activity.title.includes(project) || 
-                    activity.description.includes(project)
-                );
-            }
+            // 过滤掉匹配分数为0的活动
+            matched = matched.filter(activity => activity.matchScore > 0);
             
-            // 根据时间筛选（简化处理）
-            if (time && (time.includes('下周末') || time.includes('周末'))) {
-                // 在实际应用中，这里会有更复杂的时间匹配逻辑
-                matched = matched.filter(activity => {
-                    const date = new Date(activity.time);
-                    return date.getDay() === 6 || date.getDay() === 0; // 周六或周日
-                });
-            }
+            // 按匹配分数排序
+            matched.sort((a, b) => b.matchScore - a.matchScore);
             
             return matched;
+        }
+
+        // 辅助函数：判断日期是否为周末
+        function isWeekend(dateString) {
+            const date = new Date(dateString);
+            return date.getDay() === 6 || date.getDay() === 0;
+        }
+
+        // 辅助函数：判断日期是否为假期（简化处理）
+        function isHoliday(dateString) {
+            // 在实际应用中，这里会有更复杂的假期判断逻辑
+            const holidays = ['2025-01-01', '2025-02-10', '2025-02-11', '2025-02-12', '2025-04-04', '2025-05-01', '2025-06-10', '2025-09-17', '2025-10-01'];
+            return holidays.includes(dateString);
         }
 
         // 显示匹配结果
         function displayResults(matchedActivities) {
             const resultsContainer = document.getElementById('resultsContainer');
             const resultsGrid = document.getElementById('resultsGrid');
+            const resultsCount = document.getElementById('matchCount');
+            
+            // 保存当前结果用于排序
+            currentResults = matchedActivities;
             
             // 清空之前的结果
             resultsGrid.innerHTML = '';
             
             if (matchedActivities.length === 0) {
                 resultsGrid.innerHTML = '<p>抱歉，没有找到匹配的活动。请尝试调整您的搜索条件。</p>';
+                resultsCount.textContent = '0';
             } else {
-                matchedActivities.forEach(activity => {
-                    const card = document.createElement('div');
-                    card.className = 'result-card';
-                    card.innerHTML = `
-                        <div class="result-img">
-                            <img src="${activity.image}" alt="${activity.title}">
-                        </div>
-                        <div class="result-content">
-                            <h3>${activity.title}</h3>
-                            <div class="result-meta">
-                                <span><i class="fas fa-map-marker-alt"></i> ${activity.location}</span>
-                                <span><i class="fas fa-calendar-alt"></i> ${activity.time}</span>
-                            </div>
-                            <div class="result-meta">
-                                <span><i class="fas fa-clock"></i> ${activity.duration}</span>
-                                <span><i class="fas fa-users"></i> ${activity.booked}/${activity.capacity} 人</span>
-                            </div>
-                            <p class="result-description">${activity.description}</p>
-                            <button class="btn select-btn" data-id="${activity.id}">选择此活动</button>
-                        </div>
-                    `;
-                    resultsGrid.appendChild(card);
-                });
+                // 应用当前排序
+                sortResults(currentSort);
                 
-                // 添加选择按钮事件
-                document.querySelectorAll('.select-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const activityId = parseInt(this.getAttribute('data-id'));
-                        selectedActivity = activities.find(a => a.id === activityId);
-                        showConfirmation(selectedActivity);
-                    });
-                });
+                resultsCount.textContent = matchedActivities.length;
+                
+                // 滚动到结果区域
+                resultsContainer.style.display = 'block';
+                resultsContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // 排序结果
+        function sortResults(sortType) {
+            currentSort = sortType;
+            
+            switch(sortType) {
+                case 'relevance':
+                    currentResults.sort((a, b) => b.matchScore - a.matchScore);
+                    break;
+                case 'date':
+                    currentResults.sort((a, b) => new Date(a.time) - new Date(b.time));
+                    break;
+                case 'popularity':
+                    currentResults.sort((a, b) => b.popularity - a.popularity);
+                    break;
             }
             
-            // 显示结果区域
-            resultsContainer.style.display = 'block';
+            // 更新排序按钮状态
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                if (btn.getAttribute('data-sort') === sortType) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // 重新渲染结果
+            renderResults();
+        }
+
+        // 渲染结果
+        function renderResults() {
+            const resultsGrid = document.getElementById('resultsGrid');
+            resultsGrid.innerHTML = '';
+            
+            currentResults.forEach(activity => {
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                card.innerHTML = `
+                    <div class="result-img">
+                        <img src="${activity.image}" alt="${activity.title}">
+                    </div>
+                    <div class="result-content">
+                        <h3>${activity.title}</h3>
+                        <div class="result-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> ${activity.location}</span>
+                            <span><i class="fas fa-calendar-alt"></i> ${activity.time}</span>
+                        </div>
+                        <div class="result-meta">
+                            <span><i class="fas fa-clock"></i> ${activity.duration}</span>
+                            <span><i class="fas fa-users"></i> ${activity.booked}/${activity.capacity} 人</span>
+                        </div>
+                        <div class="result-tags">
+                            ${activity.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <p class="result-description">${activity.description}</p>
+                        <div class="result-meta">
+                            <span>热度: ${activity.popularity}%</span>
+                            <span>难度: ${activity.difficulty}</span>
+                        </div>
+                        <button class="btn select-btn" data-id="${activity.id}">选择此活动</button>
+                    </div>
+                `;
+                resultsGrid.appendChild(card);
+            });
+            
+            // 添加选择按钮事件
+            document.querySelectorAll('.select-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const activityId = parseInt(this.getAttribute('data-id'));
+                    selectedActivity = activities.find(a => a.id === activityId);
+                    showConfirmation(selectedActivity);
+                });
+            });
         }
 
         // 显示确认区域
@@ -767,6 +991,7 @@
                 <p><strong>地点：</strong> ${activity.location}</p>
                 <p><strong>时间：</strong> ${activity.time}</p>
                 <p><strong>时长：</strong> ${activity.duration}</p>
+                <p><strong>难度：</strong> ${activity.difficulty}</p>
                 <p><strong>描述：</strong> ${activity.description}</p>
             `;
             
@@ -807,6 +1032,14 @@
             selectedActivity = null;
         });
 
+        // 排序按钮事件
+        document.querySelectorAll('.sort-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const sortType = this.getAttribute('data-sort');
+                sortResults(sortType);
+            });
+        });
+
         // 检查用户登录状态
         document.addEventListener('DOMContentLoaded', function() {
             const currentUser = localStorage.getItem('currentUser');
@@ -827,7 +1060,4 @@
         });
     </script>
 </body>
-
 </html>
-
-
